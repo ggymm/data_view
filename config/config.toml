@@ -1,0 +1,34 @@
+[hotreload]
+  suffixes = [".go"]
+  ignore = []
+
+[app]
+  #app 名称
+  name = "data_view"
+  #app url
+  url  = "http://localhost"
+  #app 文档地址
+  doc = "./apidoc"
+  addr = ":8888"
+  #单元测试调试信息
+  debug = false
+
+  [app.logger]
+    level = "INFO"
+    name = "application"
+
+#数据库驱动
+[database]
+  driver = "mysql"
+
+[mysql]
+  databaseName ="data_view"
+  databaseUserName ="root"
+  databasePassword ="root"
+
+#reids
+[redis]
+  Addr = "127.0.0.1:6379"
+  Password = ""
+  DB = 0
+
