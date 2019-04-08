@@ -42,13 +42,13 @@ const DataSourceSelectCondition = "data_source_id = ? AND del_flag = ?"
 
 /**
  * 获取分页列表
- * @method GetDataSourceList
+ * @method GetDataSourcePage
  * @param [utils.PagingRequest] paging [分页查询条件]
  * @return [[]*DataSource] [列表]
  * @return [int64] [总数]
  * @return [error] [错误]
  */
-func GetDataSourceList(paging *utils.PagingRequest) ([]*DataSource, int64, error) {
+func GetDataSourcePage(paging *utils.PagingRequest) ([]*DataSource, int64, error) {
 	var list = make([]*DataSource, 0)
 	var count int64 = 0
 	paging.Search[constant.DelFlag] = constant.IsExist
@@ -69,6 +69,26 @@ func GetDataSourceList(paging *utils.PagingRequest) ([]*DataSource, int64, error
 		return list, count, err
 	}
 	return list, count, nil
+}
+
+/**
+ * 获取不分页列表
+ * @method GetDataSourceList
+ * @return [[]*DataSource] [列表]
+ * @return [error] [错误]
+ */
+func GetDataSourceList() ([]*DataSource, error) {
+	var list = make([]*DataSource, 0)
+	var search = make(map[string]interface{})
+	search[constant.DelFlag] = constant.IsExist
+	// 获取查询列表
+	if err := database.DB.
+		Where(search).
+		Order(constant.DefaultOrder).
+		Find(&list).Error; err != nil {
+		return list, err
+	}
+	return list, nil
 }
 
 /**

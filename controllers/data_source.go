@@ -9,7 +9,7 @@ import (
 	"github.com/kataras/iris"
 )
 
-func GetDataSourceList(context iris.Context) {
+func GetDataSourcePage(context iris.Context) {
 	pagingRequest, err := utils.NewPagingRequest(context)
 	if err != nil {
 		// 错误的请求
@@ -19,16 +19,32 @@ func GetDataSourceList(context iris.Context) {
 		return
 	}
 	// 查询数据库
-	list, count, err := models.GetDataSourceList(pagingRequest)
+	list, count, err := models.GetDataSourcePage(pagingRequest)
 	if err != nil {
 		// 错误的请求
 		context.StatusCode(iris.StatusBadRequest)
-		// 请求参数错误，不能正确格式化
+		// 查询数据库错误
 		_, _ = context.JSON(ApiResourceError(err.Error()))
 		return
 	}
 	context.StatusCode(iris.StatusOK)
 	_, _ = context.JSON(ApiResourceSuccess(map[string]interface{}{"list": list, "count": count}))
+	return
+}
+
+//noinspection GoUnusedParameter
+func GetDataSourceList(context iris.Context) {
+	// 查询数据库
+	list, err := models.GetDataSourceList()
+	if err != nil {
+		// 错误的请求
+		context.StatusCode(iris.StatusBadRequest)
+		// 查询数据库错误
+		_, _ = context.JSON(ApiResourceError(err.Error()))
+		return
+	}
+	context.StatusCode(iris.StatusOK)
+	_, _ = context.JSON(ApiResourceSuccess(list))
 	return
 }
 

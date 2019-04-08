@@ -39,14 +39,15 @@ func newApp() (api *iris.Application) {
 		v1.Use(middleware.CheckToken)
 		v1.PartyFunc("/data_view", func(dataViewApi router.Party) {
 			dataViewApi.PartyFunc("/data_source", func(dataSourceApi router.Party) {
-				dataSourceApi.Get("/", controllers.GetDataSourceList)
+				dataSourceApi.Get("/", controllers.GetDataSourcePage)
+				dataSourceApi.Get("/list", controllers.GetDataSourceList)
 				dataSourceApi.Get("/{id:uint64}", controllers.GetDataSource)
 				dataSourceApi.Delete("/{id:uint64}", controllers.DeleteDataSource)
 				dataSourceApi.PartyFunc("/test_connection", func(testConnectionApi router.Party) {
 					testConnectionApi.Post("/", controllers.TestConnection)
 				})
 				dataSourceApi.Post("/", controllers.SaveDataSource)
-				dataSourceApi.Put("/", controllers.UpdateDataSource)
+				dataSourceApi.Put("/{id:uint64}", controllers.UpdateDataSource)
 			})
 			dataViewApi.PartyFunc("/screen_instance", func(screenInstanceApi router.Party) {
 				screenInstanceApi.Get("/", controllers.GetScreenInstanceList)
