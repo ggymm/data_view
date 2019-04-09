@@ -25,4 +25,3 @@ func (t Time) MarshalJSON() ([]byte, error) {
 func (t Time) String() string {
 	return time.Time(t).Format(timeFormat)
 }
-

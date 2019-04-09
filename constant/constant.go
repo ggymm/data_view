@@ -10,3 +10,10 @@ const (
 	SQLServer    = "SQLServer"
 	DB2          = "DB2"
 )
+
+const (
+	DataBase = "DataBase"
+	CSV      = "CSV"
+)
+
+const EmptyString = ""

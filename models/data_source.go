@@ -158,7 +158,7 @@ func TestConnection(dataSourceJson *DataSourceJson) error {
 	} else if strings.EqualFold(dataSourceType, constant.SQLServer) {
 	} else if strings.EqualFold(dataSourceType, constant.DB2) {
 	}
-	return errors.New("数据库类型错误")
+	return errors.New(constant.DataSourceTypeError)
 }
 
 /**

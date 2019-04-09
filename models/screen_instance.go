@@ -70,4 +70,3 @@ func GetScreenInstanceById(id uint64) (*ScreenInstance, error) {
 	}
 	return object, nil
 }
-

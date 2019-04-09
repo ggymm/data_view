@@ -6,6 +6,6 @@ import (
 	"time"
 )
 
-func main()  {
+func main() {
 	fmt.Println(models.Time(time.Now()))
 }
