@@ -43,14 +43,17 @@ type ChartData interface {
 
 func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	var chartData ChartData
+	// 此处判断图表类型
 	chartType := chartDataParams.ChartType
 	if strings.EqualFold(chartType, PieNormal) {
 		chartData = pie_normal.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
+	// 此处判断图表数据源类型
 	dataSourceType := chartDataParams.DataSourceType
 	if strings.EqualFold(dataSourceType, constant.DataBase) {
+		// 如果是DB类型的数据源，需要获取好各种数据库连接对象
 		databaseString := chartDataParams.Database
 		var databaseId uint64
 		if err = utils.StrToUint(databaseString, &databaseId); err != nil {
