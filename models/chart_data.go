@@ -3,6 +3,8 @@ package models
 import (
 	"data_view/constant"
 	"data_view/models/charts/pie_normal"
+	"data_view/models/charts/pie_rings"
+	"data_view/models/charts/plot_bubble"
 	"data_view/utils"
 	"database/sql"
 	"errors"
@@ -24,6 +26,7 @@ const (
 	MapChina                    = "mapChina"
 	PieNormal                   = "pieNormal"
 	PieRing                     = "pieRing"
+	PieRings                    = "pieRings"
 	Pie2D                       = "pie2D"
 	PiePercent                  = "piePercent"
 	RadarBasic                  = "radarBasic"
@@ -47,6 +50,10 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 	chartType := chartDataParams.ChartType
 	if strings.EqualFold(chartType, PieNormal) {
 		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, PlotBubble) {
+		chartData = plot_bubble.New()
+	} else if strings.EqualFold(chartType, PieRings) {
+		chartData = pie_rings.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
