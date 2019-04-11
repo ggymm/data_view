@@ -69,18 +69,16 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*[]inte
 				dataResult["name"] = value
 			}
 			if strings.EqualFold(columns[i], valueField) {
-				other, err := strconv.Atoi(value)
-				if err != nil {
-					if other < 1 && other > 0 {
-						dataResult["value"] = other * 100
-						dataResult["other"] = 100 - other*100
-					} else if other < 10 && other > 1 {
-						dataResult["value"] = other * 10
-						dataResult["other"] = 100 - other*10
-					} else {
-						dataResult["value"] = other
-						dataResult["other"] = 100 - other
-					}
+				other, _ := strconv.Atoi(value)
+				if other < 1 && other > 0 {
+					dataResult["value"] = other * 100
+					dataResult["other"] = 100 - other*100
+				} else if other < 10 && other > 1 {
+					dataResult["value"] = other * 10
+					dataResult["other"] = 100 - other*10
+				} else if other <= 100 && other > 10 {
+					dataResult["value"] = other
+					dataResult["other"] = 100 - other
 				} else {
 					dataResult["value"] = 100
 					dataResult["other"] = 0
