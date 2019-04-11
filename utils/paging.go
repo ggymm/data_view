@@ -29,20 +29,17 @@ func NewPagingRequest(context iris.Context) (*PagingRequest, error) {
 			return nil, errors.New(constant.RequestBodyError)
 		}
 	}
-
 	// 修正search数据
 	for k, v := range search {
 		if v == nil {
 			delete(search, k)
 		}
 	}
-
 	pagingRequest := PagingRequest{
 		Page:   page,
 		Size:   size,
 		Search: search,
 	}
-
 	pagingRequest.pagingFormat()
 	return &pagingRequest, nil
 }
@@ -54,7 +51,6 @@ func (pagingRequest *PagingRequest) pagingFormat() {
 	if pagingRequest.Size < 1 {
 		pagingRequest.Size = 1
 	}
-
 	pagingRequest.Offset = (pagingRequest.Page - 1) * pagingRequest.Size
 	pagingRequest.Limit = pagingRequest.Size
 }

@@ -71,7 +71,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*[]inte
 			if strings.EqualFold(columns[i], valueField) {
 				dataResult["value"] = value
 			}
-
 		}
 		dataResults = append(dataResults, dataResult)
 	}
