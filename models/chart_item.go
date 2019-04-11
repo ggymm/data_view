@@ -2,7 +2,7 @@ package models
 
 import (
 	"data_view/database"
-	"data_view/utils"
+	"database/sql"
 )
 
 type ChartItem struct {
@@ -22,49 +22,61 @@ type ChartItem struct {
 	ItemY         uint64 `gorm:"bigint(20) DEFAULT NULL"`
 }
 
-/**
- * 获取分页列表
- * @method GetChartItemList
- * @param [utils.PagingRequest] paging [分页查询条件]
- * @return [[]*ChartItem] [列表]
- * @return [int64] [总数]
- * @return [error] [错误]
- */
-func GetChartItemList(paging *utils.PagingRequest) ([]*ChartItem, int64, error) {
-	var list = make([]*ChartItem, 0)
-	var count int64 = 0
-	// 获取查询列表
-	if err := database.DB.
-		Where(paging.Search).
-		Offset(paging.Offset).
-		Limit(paging.Limit).
-		Find(&list).Error; err != nil {
-		return list, count, err
-	}
-	// 获取总数
-	if err := database.DB.
-		Model(&ChartItem{}).
-		Where(paging.Search).
-		Count(&count).Error; err != nil {
-		return list, count, err
-	}
-	return list, count, nil
-}
+const Order = "item_i desc"
 
 /**
- * 根据ID获取数据
- * @method GetChartItemById
- * @param [uint64] id [ID]
- * @return [*ChartItem] [对象]
+ * 根据实例ID获取图表列表
+ * @method GetChartItemByInstance、
+ * @param [uint64] instanceId [实例ID]
+ * @return [[]map[string]interface{}] [列表]
  * @return [error] [错误]
  */
-func GetChartItemById(id uint64) (*ChartItem, error) {
-	object := new(ChartItem)
-	// 根据ID获取数据
-	if err := database.DB.
-		Where("item_id = ?", id).
-		First(&object).Error; err != nil {
-		return object, err
+//noinspection GoNilness
+func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error) {
+	var dataResults = make([]map[string]interface{}, 0)
+	// 获取查询列表
+	rows, err := database.DB.
+		Table("chart_item").
+		Select("item_i as i, "+
+			"item_x as `x`, "+
+			"item_y as `y`, "+
+			"item_width as `width`, "+
+			"item_height as `height`, "+
+			"item_chart_type as `chartType`, "+
+			"item_choose as `choose`, "+
+			"item_refresh as `refresh`, "+
+			"item_chart_data as `chartData`, "+
+			"item_data as `data`, "+
+			"item_interval as `interval`, "+
+			"item_option as `option` ").Where("instance_id = ?", instanceId).Order(Order).Rows()
+	defer rows.Close()
+	if err != nil {
+		return &dataResults, err
 	}
-	return object, nil
+	columns, err := rows.Columns()
+	if err != nil {
+		return &dataResults, err
+	}
+	values := make([]sql.RawBytes, len(columns))
+	scanArgs := make([]interface{}, len(values))
+	for i := range values {
+		scanArgs[i] = &values[i]
+	}
+	for rows.Next() {
+		if err := rows.Scan(scanArgs...); err != nil {
+			return &dataResults, err
+		}
+		dataResult := make(map[string]interface{})
+		var value string
+		for i, col := range values {
+			if col == nil {
+				value = "NULL"
+			} else {
+				value = string(col)
+			}
+			dataResult[columns[i]] = value
+		}
+		dataResults = append(dataResults, dataResult)
+	}
+	return &dataResults, nil
 }

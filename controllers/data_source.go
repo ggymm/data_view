@@ -32,7 +32,6 @@ func GetDataSourcePage(context iris.Context) {
 	return
 }
 
-//noinspection GoUnusedParameter
 func GetDataSourceList(context iris.Context) {
 	// 查询数据库
 	list, err := models.GetDataSourceList()
@@ -58,7 +57,7 @@ func GetDataSource(context iris.Context) {
 		return
 	}
 	// 查询数据库
-	etl, err := models.GetDataSourceById(id)
+	dataSource, err := models.GetDataSourceById(id)
 	if err != nil {
 		// 程序内部错误
 		context.StatusCode(iris.StatusInternalServerError)
@@ -67,7 +66,7 @@ func GetDataSource(context iris.Context) {
 		return
 	}
 	context.StatusCode(iris.StatusOK)
-	_, _ = context.JSON(ApiResourceSuccess(etl))
+	_, _ = context.JSON(ApiResourceSuccess(dataSource))
 	return
 }
 
