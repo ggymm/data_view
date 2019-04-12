@@ -1,4 +1,4 @@
-package plot_bubble
+package radar_basic
 
 import (
 	"data_view/constant"
@@ -8,15 +8,15 @@ import (
 	"strings"
 )
 
-type PlotBubbleGetData struct {
+type RadarBasicGetData struct {
 }
 
-func New() *PlotBubbleGetData {
-	return &PlotBubbleGetData{}
+func New() *RadarBasicGetData {
+	return &RadarBasicGetData{}
 }
 
 //GetDataFromDB
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (radarBasicGetData *RadarBasicGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
 	sqlString := chartDataParams.Sql
 	rows, err := db.Query(sqlString)
 	if err != nil {
@@ -34,16 +34,15 @@ func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataP
 	return string(resultString), nil
 }
 
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (radarBasicGetData *RadarBasicGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	return "", nil
 }
 
 func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[string]interface{}, error) {
-	// 普通饼图==环形饼图==2D饼图==词云
 	// 图表所需要的字段和数据库中字段的对应关系
-	xField := chartDataParams.X
-	yField := chartDataParams.Y
+	nameField := chartDataParams.Name
 	valueField := chartDataParams.Value
+	maxField := chartDataParams.Max
 	legendField := chartDataParams.Legend
 
 	// 返回值列表
@@ -61,6 +60,7 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 		scanArgs[i] = &values[i]
 	}
 	legendList := make([]string, 0)
+	nameList := make([]string, 0)
 	for rows.Next() {
 		if err := rows.Scan(scanArgs...); err != nil {
 			return &resultMap, err
@@ -74,11 +74,12 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 			} else {
 				value = string(col)
 			}
-			if strings.EqualFold(columns[i], xField) {
-				tempResultMap["x"] = value
+			if strings.EqualFold(columns[i], nameField) {
+				nameList = append(nameList, value)
+				tempResultMap["name"] = value
 			}
-			if strings.EqualFold(columns[i], yField) {
-				tempResultMap["y"] = value
+			if strings.EqualFold(columns[i], maxField) {
+				tempResultMap["max"] = value
 			}
 			if strings.EqualFold(columns[i], valueField) {
 				tempResultMap["value"] = value
@@ -91,25 +92,40 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 		tempResults = append(tempResults, tempResultMap)
 	}
 	//规范数据
-	yList := make([]interface{}, 0)
-	for _, legend := range utils.Duplicate(legendList) {
-		yMap := make(map[string]interface{})
-		valueResultList := make([]interface{}, 0)
+	indicatorList := make([]map[string]string, 0)
+	dataList := make([]map[string]interface{}, 0)
+	var ret = utils.Duplicate(legendList)
+	for _, legend := range ret {
+		dataMap := make(map[string]interface{})
+		valueList := make([]interface{}, 0)
 		for _, tempResult := range tempResults {
 			if strings.EqualFold(legend, tempResult["legend"]) {
-				valueList := make([]interface{}, 0)
-				valueList = append(valueList, tempResult["x"])
-				valueList = append(valueList, tempResult["y"])
 				valueList = append(valueList, tempResult["value"])
-				valueList = append(valueList, tempResult["legend"])
-				valueResultList = append(valueResultList, valueList)
 			}
 		}
-		yMap["name"] = legend
-		yMap["value"] = valueResultList
-		yList = append(yList, yMap)
+		dataMap["name"] = legend
+		dataMap["value"] = valueList
+		dataList = append(dataList, dataMap)
+	}
+	for _, name := range utils.Duplicate(nameList) {
+		indicatorMap := make(map[string]string)
+		for _, tempResult := range tempResults {
+			if strings.EqualFold(name, tempResult["name"]) {
+				max, ok := indicatorMap["max"]
+				if ok { //max取最大值
+					if max > tempResult["max"] {
+						indicatorMap["max"] = max
+					}
+				} else {
+					indicatorMap["max"] = tempResult["max"]
+				}
+			}
+		}
+		indicatorMap["name"] = name
+		indicatorList = append(indicatorList, indicatorMap)
 	}
 	resultMap["legend"] = utils.Duplicate(legendList)
-	resultMap["y"] = yList
+	resultMap["indicator"] = indicatorList
+	resultMap["data"] = dataList
 	return &resultMap, nil
 }

@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"reflect"
 	"strconv"
 )
 
@@ -27,15 +26,21 @@ func StrToUint(strNumber string, value interface{}) (err error) {
 }
 
 /**
-去除slice中的重复数据
+去除重复数据
 */
-func Duplicate(a interface{}) (ret []interface{}) {
-	va := reflect.ValueOf(a)
-	for i := 0; i < va.Len(); i++ {
-		if i > 0 && reflect.DeepEqual(va.Index(i-1).Interface(), va.Index(i).Interface()) {
-			continue
+func Duplicate(arr []string) (newArr []string) {
+	newArr = make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
 		}
-		ret = append(ret, va.Index(i).Interface())
+		if !repeat {
+			newArr = append(newArr, arr[i])
+		}
 	}
-	return ret
+	return
 }

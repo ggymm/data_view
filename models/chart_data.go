@@ -5,6 +5,7 @@ import (
 	"data_view/models/charts/pie_normal"
 	"data_view/models/charts/pie_rings"
 	"data_view/models/charts/plot_bubble"
+	"data_view/models/charts/radar_basic"
 	"data_view/utils"
 	"database/sql"
 	"errors"
@@ -48,12 +49,20 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 	var chartData ChartData
 	// 此处判断图表类型
 	chartType := chartDataParams.ChartType
-	if strings.EqualFold(chartType, PieNormal) {
-		chartData = pie_normal.New()
-	} else if strings.EqualFold(chartType, PlotBubble) {
+	if strings.EqualFold(chartType, PlotBubble) { //气泡散点图
 		chartData = plot_bubble.New()
-	} else if strings.EqualFold(chartType, PieRings) {
+	} else if strings.EqualFold(chartType, PieNormal) {
+		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, PieRing) { //环形饼图
+		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, PieRings) { //环形饼图列表
 		chartData = pie_rings.New()
+	} else if strings.EqualFold(chartType, Pie2D) { //2D饼图
+		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, RadarBasic) { //基础雷达图
+		chartData = radar_basic.New()
+	} else if strings.EqualFold(chartType, WordCloud) { //词云
+		chartData = pie_normal.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
