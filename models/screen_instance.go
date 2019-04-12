@@ -130,3 +130,15 @@ func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64)
 
 	return nil
 }
+
+/**
+ * 更新大屏实例
+ * @method UpdateDataSource
+ * @param [ScreenInstanceJson] screenInstanceJson [数据对象]
+ * @param [uint64] id [数据源ID]
+ * @param [uint64] editUser [进行操作的用户]
+ * @return [error] [错误]
+ */
+func UpdateScreenInstance(screenInstanceJson *ScreenInstanceJson, id uint64, editUser uint64) error {
+	return nil
+}
