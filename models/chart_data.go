@@ -6,6 +6,11 @@ import (
 	"data_view/models/charts/pie_rings"
 	"data_view/models/charts/plot_bubble"
 	"data_view/models/charts/radar_basic"
+	"data_view/models/charts/relation_five"
+	"data_view/models/charts/relation_four"
+	"data_view/models/charts/relation_one"
+	"data_view/models/charts/relation_three"
+	"data_view/models/charts/relation_two"
 	"data_view/utils"
 	"database/sql"
 	"errors"
@@ -61,6 +66,16 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, RadarBasic) { //基础雷达图
 		chartData = radar_basic.New()
+	} else if strings.EqualFold(chartType, RelationOne) { //关系图1
+		chartData = relation_one.New()
+	} else if strings.EqualFold(chartType, RelationTwo) { //关系图2
+		chartData = relation_two.New()
+	} else if strings.EqualFold(chartType, RelationThree) { //关系图3
+		chartData = relation_three.New()
+	} else if strings.EqualFold(chartType, RelationFour) { //关系图4
+		chartData = relation_four.New()
+	} else if strings.EqualFold(chartType, RelationFive) { //关系图5
+		chartData = relation_five.New()
 	} else if strings.EqualFold(chartType, WordCloud) { //词云
 		chartData = pie_normal.New()
 	} else {

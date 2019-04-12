@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"math/rand"
 	"strconv"
+	"strings"
 )
 
 func StrToUint(strNumber string, value interface{}) (err error) {
@@ -43,4 +45,64 @@ func Duplicate(arr []string) (newArr []string) {
 		}
 	}
 	return
+}
+
+/*
+生成随机颜色
+*/
+func CreateColor() string {
+	red := strings.ToUpper(strconv.FormatInt(int64(rand.Intn(256)), 16))
+	if len(red) == 1 {
+		red = "0" + red
+	}
+	blue := strings.ToUpper(strconv.FormatInt(int64(rand.Intn(256)), 16))
+	if len(blue) == 1 {
+		blue = "0" + blue
+	}
+	green := strings.ToUpper(strconv.FormatInt(int64(rand.Intn(256)), 16))
+	if len(green) == 1 {
+		green = "0" + green
+	}
+	return "#" + red + green + blue
+}
+
+/**
+判断元素在数组中出现的次数
+*/
+func CountInArray(a string, b []string) int {
+	var result int = 0
+	for i := 0; i < len(b); i++ {
+		if a == b[i] {
+			result++
+		}
+	}
+	return result
+}
+
+/**
+判断元素在数组中的位置
+*/
+func GetIndexInArray(a string, b []string) int {
+	var result int = 0
+	for i := 0; i < len(b); i++ {
+		if a == b[i] {
+			result = i
+			break
+		}
+	}
+	return result
+}
+
+/**
+判断元素在数组中是否存在
+*/
+func IsExitInArray(a string, b []string) bool {
+	var result bool = false
+	for i := 0; i < len(b); i++ {
+		if a == b[i] {
+			result = true
+			break
+		}
+	}
+	return result
 }
