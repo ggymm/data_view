@@ -5,21 +5,31 @@ import (
 	"data_view/database"
 	"data_view/utils"
 	"strings"
+	"time"
 )
 
 type ScreenInstance struct {
-	InstanceId              uint64 `gorm:"primary_key bigint(20) NOT NULL AUTO_INCREMENT"`
-	AddTime                 Time   `gorm:"datetime DEFAULT NULL"`
-	AddUser                 uint64 `gorm:"bigint(20) DEFAULT NULL"`
-	DelFlag                 uint   `gorm:"int(1) DEFAULT NULL"`
-	EditTime                Time   `gorm:"datetime DEFAULT NULL"`
-	EditUser                uint64 `gorm:"bigint(20) DEFAULT NULL"`
-	InstanceBackgroundColor string `gorm:"varchar(20) DEFAULT NULL"`
-	InstanceBackgroundImg   string `gorm:"varchar(200) DEFAULT NULL"`
-	InstanceHeight          uint64 `gorm:"bigint(20) DEFAULT NULL"`
-	InstanceTitle           string `gorm:"varchar(30) DEFAULT NULL"`
-	InstanceViewImg         string `gorm:"mediumtext"`
-	InstanceWidth           uint64 `gorm:"bigint(20) DEFAULT NULL"`
+	InstanceId              uint64    `gorm:"primary_key bigint(20) NOT NULL AUTO_INCREMENT"`
+	AddTime                 time.Time `gorm:"datetime DEFAULT NULL"`
+	AddUser                 uint64    `gorm:"bigint(20) DEFAULT NULL"`
+	DelFlag                 uint      `gorm:"int(1) DEFAULT NULL"`
+	EditTime                time.Time `gorm:"datetime DEFAULT NULL"`
+	EditUser                uint64    `gorm:"bigint(20) DEFAULT NULL"`
+	InstanceBackgroundColor string    `gorm:"varchar(20) DEFAULT NULL"`
+	InstanceBackgroundImg   string    `gorm:"varchar(200) DEFAULT NULL"`
+	InstanceHeight          uint64    `gorm:"bigint(20) DEFAULT NULL"`
+	InstanceTitle           string    `gorm:"varchar(30) DEFAULT NULL"`
+	InstanceViewImg         string    `gorm:"mediumtext"`
+	InstanceWidth           uint64    `gorm:"bigint(20) DEFAULT NULL"`
+}
+
+type ScreenInstanceJson struct {
+	InstanceBackgroundColor string `json:"InstanceBackgroundColor" validate:"required"`
+	InstanceBackgroundImg   string `json:"InstanceBackgroundImg" validate:"required"`
+	InstanceHeight          uint64 `json:"InstanceHeight" validate:"required"`
+	InstanceTitle           string `json:"InstanceTitle" validate:"required"`
+	InstanceViewImg         string `json:"InstanceViewImg" validate:"required"`
+	InstanceWidth           uint64 `json:"InstanceWidth" validate:"required"`
 }
 
 type ScreenInstanceParams struct {
@@ -30,6 +40,18 @@ type ScreenInstanceParams struct {
 	InstanceBackgroundColor string
 	ChartItems              []map[string]interface{}
 	StartIndex              uint64
+}
+
+func (screenInstanceParams *ScreenInstanceParams) setStartIndex() error {
+	chartItems := screenInstanceParams.ChartItems
+	startIndexString := chartItems[0]["i"]
+	startIndexStringReplaced := strings.Replace(startIndexString.(string), "chart", "", -1)
+	var startIndex uint64
+	if err := utils.StrToUint(startIndexStringReplaced, &startIndex); err != nil {
+		return err
+	}
+	screenInstanceParams.StartIndex = startIndex
+	return nil
 }
 
 const ScreenInstanceSelectCondition = "instance_id = ? AND del_flag = ?"
@@ -97,14 +119,14 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
 	return screenInstanceParams, nil
 }
 
-func (screenInstanceParams *ScreenInstanceParams) setStartIndex() error {
-	chartItems := screenInstanceParams.ChartItems
-	startIndexString := chartItems[0]["i"]
-	startIndexStringReplaced := strings.Replace(startIndexString.(string), "chart", "", -1)
-	var startIndex uint64
-	if err := utils.StrToUint(startIndexStringReplaced, &startIndex); err != nil {
-		return err
-	}
-	screenInstanceParams.StartIndex = startIndex
+/**
+ * 保存大屏实例
+ * @method SaveScreenInstance
+ * @param [ScreenInstanceJson] screenInstanceJson [可视化大屏对象]
+ * @param [uint64] editUser [进行操作的用户]
+ * @return [error] [错误]
+ */
+func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64) error {
+
 	return nil
 }
