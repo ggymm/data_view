@@ -13,19 +13,19 @@ import (
 )
 
 type DataSource struct {
-	DataSourceId           uint64    `gorm:"primary_key bigint(20) NOT NULL AUTO_INCREMENT"`
-	DataSourceName         string    `gorm:"varchar(50) DEFAULT NULL COMMENT '数据源名称'"`
-	DataSourceType         string    `gorm:"varchar(50) DEFAULT NULL COMMENT '数据源类型'"`
-	DataSourceDatabaseName string    `gorm:"varchar(100) DEFAULT NULL COMMENT '数据源的数据库名称'"`
-	DataSourceIp           string    `gorm:"varchar(50) DEFAULT NULL COMMENT '数据源的IP地址'"`
-	DataSourcePort         uint      `gorm:"int(5) DEFAULT NULL COMMENT '数据源的端口号'"`
-	DataSourceUsername     string    `gorm:"varchar(50) DEFAULT NULL COMMENT '数据源的账户名称'"`
-	DataSourcePassword     string    `gorm:"varchar(50) DEFAULT NULL COMMENT '数据源的账户密码'"`
-	AddTime                time.Time `gorm:"datetime DEFAULT NULL COMMENT '添加时间'"`
-	AddUser                uint64    `gorm:"bigint(20) DEFAULT NULL COMMENT '添加者'"`
-	EditTime               time.Time `gorm:"datetime DEFAULT NULL COMMENT '编辑时间'"`
-	EditUser               uint64    `gorm:"bigint(20) DEFAULT NULL COMMENT '编辑者'"`
-	DelFlag                uint      `gorm:"int(1) DEFAULT NULL COMMENT '是否删除（1：存在；0：删除）'"`
+	AddTime                time.Time `xorm:"created"`
+	AddUser                uint64    `xorm:"bigint(20)"`
+	DataSourceId           uint64    `xorm:"pk autoincr notnull 'data_source_id'"`
+	DataSourceName         string    `xorm:"varchar(50) 'data_source_name'"`
+	DataSourceType         string    `xorm:"varchar(50) 'data_source_type'"`
+	DataSourceDatabaseName string    `xorm:"varchar(100) 'data_source_database_name'"`
+	DataSourceIp           string    `xorm:"varchar(50) 'data_source_ip'"`
+	DataSourcePort         uint      `xorm:"int(5) 'data_source_port'"`
+	DataSourceUsername     string    `xorm:"varchar(50) 'data_source_username'"`
+	DataSourcePassword     string    `xorm:"varchar(50) 'data_source_password'"`
+	DelFlag                uint      `xorm:"int(1)"`
+	EditTime               time.Time `xorm:"updated"`
+	EditUser               uint64    `xorm:"bigint(20)"`
 }
 
 type DataSourceJson struct {
@@ -55,17 +55,15 @@ func GetDataSourcePage(paging *utils.PagingRequest) ([]*DataSource, int64, error
 	// 获取查询列表
 	if err := database.DB.
 		Where(paging.Search).
-		Offset(paging.Offset).
-		Limit(paging.Limit).
-		Order(constant.DefaultOrder).
-		Find(&list).Error; err != nil {
+		Limit(paging.Limit, paging.Offset).
+		OrderBy(constant.DefaultOrder).
+		Find(&list); err != nil {
 		return list, count, err
 	}
 	// 获取总数
-	if err := database.DB.
-		Model(&DataSource{}).
+	if count, err := database.DB.
 		Where(paging.Search).
-		Count(&count).Error; err != nil {
+		Count(new(DataSource)); err != nil {
 		return list, count, err
 	}
 	return list, count, nil
@@ -84,8 +82,8 @@ func GetDataSourceList() ([]*DataSource, error) {
 	// 获取查询列表
 	if err := database.DB.
 		Where(search).
-		Order(constant.DefaultOrder).
-		Find(&list).Error; err != nil {
+		OrderBy(constant.DefaultOrder).
+		Find(&list); err != nil {
 		return list, err
 	}
 	return list, nil
@@ -101,9 +99,9 @@ func GetDataSourceList() ([]*DataSource, error) {
 func GetDataSourceById(id uint64) (*DataSource, error) {
 	dataSource := new(DataSource)
 	// 根据ID获取数据
-	if err := database.DB.
+	if _, err := database.DB.
 		Where(DataSourceSelectCondition, id, constant.IsExist).
-		First(&dataSource).Error; err != nil {
+		Get(dataSource); err != nil {
 		return dataSource, err
 	}
 	return dataSource, nil
@@ -117,12 +115,11 @@ func GetDataSourceById(id uint64) (*DataSource, error) {
  * @return [error] [错误]
  */
 func DeleteDataSourceById(id uint64) error {
-	dataSource := new(DataSource)
 	// 根据ID删除数据
-	if err := database.DB.
-		Model(&dataSource).
+	if _, err := database.DB.
+		Table(new(DataSource)).
 		Where(DataSourceSelectCondition, id, constant.IsExist).
-		Update(constant.DelFlag, constant.IsNotExist).Error; err != nil {
+		Update(map[string]interface{}{constant.DelFlag: constant.IsNotExist}); err != nil {
 		return err
 	}
 	return nil
@@ -182,8 +179,8 @@ func SaveDataSource(dataSourceJson *DataSourceJson, editUser uint64) error {
 	dataSource.EditTime = time.Now()
 	dataSource.EditUser = editUser
 	dataSource.DelFlag = constant.IsExist
-	if err := database.DB.
-		Create(dataSource).Error; err != nil {
+	if _, err := database.DB.
+		Insert(dataSource); err != nil {
 		return err
 	}
 	return nil
@@ -209,10 +206,10 @@ func UpdateDataSource(dataSourceJson *DataSourceJson, id uint64, editUser uint64
 	dataSource.EditTime = time.Now()
 	dataSource.EditUser = editUser
 	dataSource.DelFlag = constant.IsExist
-	if err := database.DB.
-		Model(&DataSource{}).
+	if _, err := database.DB.
+		Table(new(DataSource)).
 		Where(DataSourceSelectCondition, id, constant.IsExist).
-		Updates(dataSource).Error; err != nil {
+		Update(dataSource); err != nil {
 		return err
 	}
 	return nil

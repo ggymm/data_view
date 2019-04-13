@@ -10,18 +10,18 @@ import (
 )
 
 type ScreenInstance struct {
-	InstanceId              uint64    `gorm:"primary_key bigint(20) NOT NULL AUTO_INCREMENT"`
-	AddTime                 time.Time `gorm:"datetime DEFAULT NULL"`
-	AddUser                 uint64    `gorm:"bigint(20) DEFAULT NULL"`
-	DelFlag                 uint      `gorm:"int(1) DEFAULT NULL"`
-	EditTime                time.Time `gorm:"datetime DEFAULT NULL"`
-	EditUser                uint64    `gorm:"bigint(20) DEFAULT NULL"`
-	InstanceBackgroundColor string    `gorm:"varchar(20) DEFAULT NULL"`
-	InstanceBackgroundImg   string    `gorm:"varchar(200) DEFAULT NULL"`
-	InstanceHeight          uint64    `gorm:"bigint(20) DEFAULT NULL"`
-	InstanceTitle           string    `gorm:"varchar(30) DEFAULT NULL"`
-	InstanceViewImg         string    `gorm:"mediumtext"`
-	InstanceWidth           uint64    `gorm:"bigint(20) DEFAULT NULL"`
+	InstanceId              uint64    `xorm:"pk autoincr notnull 'instance_id'"`
+	AddTime                 time.Time `xorm:"created"`
+	AddUser                 uint64    `xorm:"bigint(20)"`
+	DelFlag                 uint      `xorm:"int(1)"`
+	EditTime                time.Time `xorm:"updated"`
+	EditUser                uint64    `xorm:"bigint(20)"`
+	InstanceBackgroundColor string    `xorm:"varchar(20) 'instance_background_color'"`
+	InstanceBackgroundImg   string    `xorm:"varchar(200) 'instance_background_img'"`
+	InstanceHeight          uint64    `xorm:"bigint(20) 'instance_height'"`
+	InstanceTitle           string    `xorm:"varchar(30) 'instance_title'"`
+	InstanceViewImg         string    `xorm:"mediumtext 'instance_view_img'"`
+	InstanceWidth           uint64    `xorm:"bigint(20) 'instance_width'"`
 }
 
 type ScreenInstanceJson struct {
@@ -72,17 +72,15 @@ func GetScreenInstanceList(paging *utils.PagingRequest) ([]*ScreenInstance, int6
 	// 获取查询列表
 	if err := database.DB.
 		Where(paging.Search).
-		Offset(paging.Offset).
-		Limit(paging.Limit).
-		Order(constant.DefaultOrder).
-		Find(&list).Error; err != nil {
+		Limit(paging.Limit, paging.Offset).
+		OrderBy(constant.DefaultOrder).
+		Find(&list); err != nil {
 		return list, count, err
 	}
 	// 获取总数
-	if err := database.DB.
-		Model(&ScreenInstance{}).
+	if count, err := database.DB.
 		Where(paging.Search).
-		Count(&count).Error; err != nil {
+		Count(new(DataSource)); err != nil {
 		return list, count, err
 	}
 	return list, count, nil
@@ -99,9 +97,9 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
 	screenInstance := new(ScreenInstance)
 	screenInstanceParams := new(ScreenInstanceParams)
 	// 根据ID获取数据
-	if err := database.DB.
+	if _, err := database.DB.
 		Where(ScreenInstanceSelectCondition, id, constant.IsExist).
-		First(&screenInstance).Error; err != nil {
+		Get(screenInstance); err != nil {
 		return screenInstanceParams, err
 	}
 	screenInstanceParams.InstanceId = screenInstance.InstanceId
@@ -141,8 +139,8 @@ func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64)
 	screenInstance.EditTime = time.Now()
 	screenInstance.EditUser = editUser
 	screenInstance.DelFlag = constant.IsExist
-	if err := database.DB.
-		Save(screenInstance).Error; err != nil {
+	if _, err := database.DB.
+		Insert(screenInstance); err != nil {
 		return err
 	}
 	fmt.Println(screenInstance.InstanceId)
