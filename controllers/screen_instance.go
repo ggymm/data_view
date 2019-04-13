@@ -73,7 +73,8 @@ func SaveScreenInstance(context iris.Context) {
 		return
 	}
 	editUser := middleware.GetUser()
-	if err := models.SaveScreenInstance(screenInstanceJson, editUser); err != nil {
+	instanceId, err := models.SaveScreenInstance(screenInstanceJson, editUser)
+	if err != nil {
 		// 程序内部错误
 		context.StatusCode(iris.StatusInternalServerError)
 		// 保存数据库错误
@@ -81,7 +82,7 @@ func SaveScreenInstance(context iris.Context) {
 		return
 	}
 	context.StatusCode(iris.StatusOK)
-	_, _ = context.JSON(ApiResourceSuccess(nil))
+	_, _ = context.JSON(ApiResourceSuccess(instanceId))
 	return
 }
 

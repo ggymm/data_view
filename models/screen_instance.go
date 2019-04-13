@@ -4,7 +4,6 @@ import (
 	"data_view/constant"
 	"data_view/database"
 	"data_view/utils"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -126,7 +125,7 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
  * @param [uint64] editUser [进行操作的用户]
  * @return [error] [错误]
  */
-func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64) error {
+func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64) (uint64, error) {
 	screenInstance := new(ScreenInstance)
 	screenInstance.InstanceTitle = screenInstanceJson.InstanceTitle
 	screenInstance.InstanceWidth = screenInstanceJson.InstanceWidth
@@ -141,13 +140,13 @@ func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64)
 	screenInstance.DelFlag = constant.IsExist
 	if _, err := database.DB.
 		Insert(screenInstance); err != nil {
-		return err
+		return 0, err
 	}
-	fmt.Println(screenInstance.InstanceId)
-	if err := SaveChartItem(screenInstanceJson.ChartItems); err != nil {
-		return err
+	instanceId := screenInstance.InstanceId
+	if err := SaveChartItem(screenInstanceJson.ChartItems, instanceId); err != nil {
+		return instanceId, err
 	}
-	return nil
+	return instanceId, nil
 }
 
 /**

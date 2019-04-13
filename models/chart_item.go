@@ -4,6 +4,7 @@ import (
 	"data_view/database"
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 type ChartItem struct {
@@ -60,11 +61,26 @@ func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error
 	return &dataResults, nil
 }
 
-func SaveChartItem(chartItemList []map[string]interface{}) error {
+func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64) error {
 	for _, chartItemObject := range chartItemList {
 		chartItem := new(ChartItem)
+		chartItem.InstanceId = instanceId
 		chartItem.ItemI = chartItemObject["i"].(string)
-		fmt.Println(chartItem)
+		chartItem.ItemX = uint64(chartItemObject["x"].(float64))
+		chartItem.ItemY = uint64(chartItemObject["y"].(float64))
+		chartItem.ItemWidth = uint64(chartItemObject["width"].(float64))
+		chartItem.ItemHeight = uint64(chartItemObject["height"].(float64))
+		chartItem.ItemChartType = chartItemObject["chartType"].(string)
+		chartItem.ItemChoose = chartItemObject["choose"].(string)
+		chartItem.ItemRefresh = chartItemObject["refresh"].(string)
+		chartItem.ItemChartData = chartItemObject["chartData"].(string)
+		chartItem.ItemData = chartItemObject["data"].(string)
+		chartItem.ItemInterval = strconv.FormatFloat(chartItemObject["interval"].(float64), 'f', -1, 64)
+		chartItem.ItemOption = chartItemObject["option"].(string)
+		if _, err := database.DB.
+			Insert(chartItem); err != nil {
+			return err
+		}
 	}
 	return nil
 }
