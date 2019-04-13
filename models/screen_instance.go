@@ -4,6 +4,7 @@ import (
 	"data_view/constant"
 	"data_view/database"
 	"data_view/utils"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -24,12 +25,13 @@ type ScreenInstance struct {
 }
 
 type ScreenInstanceJson struct {
-	InstanceBackgroundColor string `json:"InstanceBackgroundColor" validate:"required"`
-	InstanceBackgroundImg   string `json:"InstanceBackgroundImg" validate:"required"`
-	InstanceHeight          uint64 `json:"InstanceHeight" validate:"required"`
-	InstanceTitle           string `json:"InstanceTitle" validate:"required"`
-	InstanceViewImg         string `json:"InstanceViewImg" validate:"required"`
-	InstanceWidth           uint64 `json:"InstanceWidth" validate:"required"`
+	InstanceBackgroundColor string                   `json:"InstanceBackgroundColor"`
+	InstanceBackgroundImg   string                   `json:"InstanceBackgroundImg"`
+	InstanceHeight          uint64                   `json:"InstanceHeight" validate:"required"`
+	InstanceTitle           string                   `json:"InstanceTitle"`
+	InstanceViewImg         string                   `json:"InstanceViewImg" validate:"required"`
+	InstanceWidth           uint64                   `json:"InstanceWidth" validate:"required"`
+	ChartItems              []map[string]interface{} `json:"ChartItems" validate:"required"`
 }
 
 type ScreenInstanceParams struct {
@@ -127,7 +129,26 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
  * @return [error] [错误]
  */
 func SaveScreenInstance(screenInstanceJson *ScreenInstanceJson, editUser uint64) error {
-
+	screenInstance := new(ScreenInstance)
+	screenInstance.InstanceTitle = screenInstanceJson.InstanceTitle
+	screenInstance.InstanceWidth = screenInstanceJson.InstanceWidth
+	screenInstance.InstanceHeight = screenInstanceJson.InstanceHeight
+	screenInstance.InstanceBackgroundColor = screenInstanceJson.InstanceBackgroundColor
+	screenInstance.InstanceBackgroundImg = screenInstanceJson.InstanceBackgroundImg
+	screenInstance.InstanceViewImg = screenInstanceJson.InstanceViewImg
+	screenInstance.AddTime = time.Now()
+	screenInstance.AddUser = editUser
+	screenInstance.EditTime = time.Now()
+	screenInstance.EditUser = editUser
+	screenInstance.DelFlag = constant.IsExist
+	if err := database.DB.
+		Save(screenInstance).Error; err != nil {
+		return err
+	}
+	fmt.Println(screenInstance.InstanceId)
+	if err := SaveChartItem(screenInstanceJson.ChartItems); err != nil {
+		return err
+	}
 	return nil
 }
 

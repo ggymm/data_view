@@ -3,6 +3,7 @@ package models
 import (
 	"data_view/database"
 	"database/sql"
+	"fmt"
 )
 
 type ChartItem struct {
@@ -13,7 +14,7 @@ type ChartItem struct {
 	ItemChoose    string `gorm:"varchar(10) DEFAULT NULL"`
 	ItemData      string `gorm:"text"`
 	ItemHeight    uint64 `gorm:"bigint(20) DEFAULT NULL"`
-	ItemI         string `gorm:"primary_key varchar(20) DEFAULT NULL"`
+	ItemI         string `gorm:"varchar(20) DEFAULT NULL"`
 	ItemInterval  string `gorm:"varchar(10) DEFAULT NULL"`
 	ItemOption    string `gorm:"text"`
 	ItemRefresh   string `gorm:"varchar(10) DEFAULT NULL"`
@@ -79,4 +80,13 @@ func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error
 		dataResults = append(dataResults, dataResult)
 	}
 	return &dataResults, nil
+}
+
+func SaveChartItem(chartItemList []map[string]interface{}) error {
+	for _, chartItemObject := range chartItemList {
+		chartItem := new(ChartItem)
+		chartItem.ItemI = chartItemObject["i"].(string)
+		fmt.Println(chartItem)
+	}
+	return nil
 }
