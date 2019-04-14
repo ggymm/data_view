@@ -22,6 +22,7 @@ type ChartItem struct {
 	ItemWidth     uint64 `xorm:"bigint(20) 'item_width'"`
 	ItemX         uint64 `xorm:"bigint(20) 'item_x'"`
 	ItemY         uint64 `xorm:"bigint(20) 'item_y'"`
+	ItemVersion   uint64 `xorm:"bigint(20) 'item_version'"`
 }
 
 const Order = "item_i desc"
@@ -34,7 +35,7 @@ const Order = "item_i desc"
  * @return [error] [错误]
  */
 //noinspection GoNilness
-func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error) {
+func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]interface{}, error) {
 	var dataResults = make([]map[string]interface{}, 0)
 	querySqlTemp := "select item_i as i, " +
 		"item_x as `x`, " +
@@ -48,8 +49,8 @@ func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error
 		"item_data as `data`, " +
 		"item_interval as `interval`, " +
 		"item_option as `option` " +
-		"from chart_item where instance_id = %d"
-	querySql := fmt.Sprintf(querySqlTemp, instanceId)
+		"from chart_item where instance_id = %d and version = %d"
+	querySql := fmt.Sprintf(querySqlTemp, instanceId, version)
 	jsonData, err := database.DB.SQL(querySql).Query().Json()
 	if err != nil {
 		return &dataResults, err
@@ -61,7 +62,7 @@ func GetChartItemByInstance(instanceId uint64) (*[]map[string]interface{}, error
 	return &dataResults, nil
 }
 
-func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64) error {
+func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64, version uint64) error {
 	for _, chartItemObject := range chartItemList {
 		chartItem := new(ChartItem)
 		chartItem.InstanceId = instanceId
@@ -77,6 +78,7 @@ func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64) er
 		chartItem.ItemData = chartItemObject["data"].(string)
 		chartItem.ItemInterval = strconv.FormatFloat(chartItemObject["interval"].(float64), 'f', -1, 64)
 		chartItem.ItemOption = chartItemObject["option"].(string)
+		chartItem.ItemVersion = version
 		if _, err := database.DB.
 			Insert(chartItem); err != nil {
 			return err
