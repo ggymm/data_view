@@ -2,7 +2,6 @@ package models
 
 import (
 	"data_view/database"
-	"encoding/json"
 	"fmt"
 	"strconv"
 )
@@ -36,7 +35,6 @@ const Order = "item_i desc"
  */
 //noinspection GoNilness
 func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]interface{}, error) {
-	var dataResults = make([]map[string]interface{}, 0)
 	querySqlTemp := "select item_i as i, " +
 		"item_x as `x`, " +
 		"item_y as `y`, " +
@@ -51,12 +49,8 @@ func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]in
 		"item_option as `option` " +
 		"from chart_item where instance_id = %d and version = %d"
 	querySql := fmt.Sprintf(querySqlTemp, instanceId, version)
-	jsonData, err := database.DB.SQL(querySql).Query().Json()
+	dataResults, err := database.DB.SQL(querySql).QueryInterface()
 	if err != nil {
-		return &dataResults, err
-	}
-	fmt.Println(jsonData)
-	if err := json.Unmarshal([]byte(jsonData), &dataResults); err != nil {
 		return &dataResults, err
 	}
 	return &dataResults, nil
