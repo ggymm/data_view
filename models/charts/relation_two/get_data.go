@@ -143,7 +143,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 			nodeMap["x"] = tempResult["x"]
 			nodeMap["y"] = tempResult["y"]
 			nodeMap["itemStyle"] = ""
-			nodeMap["y"] = tempResult["y"]
 			categoryMap := make(map[string]int)
 			index := utils.GetIndexInArray(tempResult["legend"], legendList)
 			categoryMap["modularity_class"] = index

@@ -109,56 +109,53 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 				}
 				tempResultMap["targetID"] = value
 			}
+			if strings.EqualFold(columns[i], "base") {
+				tempResultMap["base"] = value
+			}
 		}
 		tempResults = append(tempResults, tempResultMap)
 	}
 	//规范数据
 	//去重后的结果
 	legendList = utils.Duplicate(legendList)
-	lineStyleMap := make(map[string]interface{})
-	lineStyleMap["normal"] = make(map[string]interface{})
 	edgesList := make([]map[string]interface{}, 0)
 	nodeList := make([]interface{}, 0)
-	normalMap := make(map[string]string)
-	normalMap["show"] = "true"
 	nodeIdList := make([]string, 0)
-	for i, tempResult := range tempResults {
+	legendMap := make(map[string]string)
+	for _, tempResult := range tempResults {
 		nodeMap := make(map[string]interface{})
 		edgeMap := make(map[string]interface{})
+		//分类信息
+		if tempResult["legend"] != "NULL" {
+			legendMap[tempResult["legend"]] = tempResult["base"]
+		}
 		//节点连接关系处理
 		if tempResult["sourceID"] != "NULL" && tempResult["targetID"] != "NULL" {
-			edgeMap["lineStyle"] = lineStyleMap
-			edgeMap["name"] = ""
 			edgeMap["source"] = tempResult["sourceID"]
 			edgeMap["target"] = tempResult["targetID"]
-			edgeMap["id"] = i
 			edgesList = append(edgesList, edgeMap)
 		}
 		//节点处理
 		if !utils.IsExitInArray(tempResult["id"], nodeIdList) {
 			nodeIdList = append(nodeIdList, tempResult["id"])
-			nodeMap["symbolSize"] = utils.CountInArray(tempResult["id"], idList) * 50
 			nodeMap["name"] = tempResult["name"]
-			nodeMap["x"] = tempResult["x"]
-			nodeMap["y"] = tempResult["y"]
-			nodeMap["itemStyle"] = ""
-			nodeMap["y"] = tempResult["y"]
-			categoryMap := make(map[string]int)
 			index := utils.GetIndexInArray(tempResult["legend"], legendList)
-			categoryMap["modularity_class"] = index
-			nodeMap["attributes"] = categoryMap
-			nodeMap["id"] = tempResult["id"]
-			nodeMap["label"] = normalMap
 			nodeMap["category"] = index
 			nodeMap["value"] = tempResult["value"]
 			nodeList = append(nodeList, nodeMap)
 		}
 	}
 	//分类信息处理
-	categoryList := make([]map[string]string, 0)
+	categoryList := make([]map[string]interface{}, 0)
 	for _, legend := range legendList {
-		categoryMap := make(map[string]string)
+		categoryMap := make(map[string]interface{})
 		categoryMap["name"] = legend
+		categoryMap["keyword"] = make(map[string]string)
+		for key, value := range legendMap {
+			if key == legend {
+				categoryMap["base"] = value
+			}
+		}
 		categoryList = append(categoryList, categoryMap)
 	}
 	//节点信息去重

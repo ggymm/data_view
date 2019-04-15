@@ -60,7 +60,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	for i := range values {
 		scanArgs[i] = &values[i]
 	}
-	legendList := make([]string, 0)
 	idList := make([]string, 0)
 	nameList := make([]string, 0)
 	for rows.Next() {
@@ -88,7 +87,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 				tempResultMap["value"] = value
 			}
 			if strings.EqualFold(columns[i], legendField) {
-				legendList = append(legendList, value)
 				tempResultMap["legend"] = value
 			}
 			if strings.EqualFold(columns[i], xField) {
@@ -114,56 +112,39 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	}
 	//规范数据
 	//去重后的结果
-	legendList = utils.Duplicate(legendList)
-	lineStyleMap := make(map[string]interface{})
-	lineStyleMap["normal"] = make(map[string]interface{})
+	attributesMap := make(map[string]interface{})
+	attributesMap["length"] = 0
 	edgesList := make([]map[string]interface{}, 0)
 	nodeList := make([]interface{}, 0)
 	normalMap := make(map[string]string)
 	normalMap["show"] = "true"
 	nodeIdList := make([]string, 0)
-	for i, tempResult := range tempResults {
+	for _, tempResult := range tempResults {
 		nodeMap := make(map[string]interface{})
 		edgeMap := make(map[string]interface{})
 		//节点连接关系处理
 		if tempResult["sourceID"] != "NULL" && tempResult["targetID"] != "NULL" {
-			edgeMap["lineStyle"] = lineStyleMap
-			edgeMap["name"] = ""
-			edgeMap["source"] = tempResult["sourceID"]
-			edgeMap["target"] = tempResult["targetID"]
-			edgeMap["id"] = i
+			edgeMap["size"] = 1
+			edgeMap["sourceID"] = tempResult["sourceID"]
+			edgeMap["targetID"] = tempResult["targetID"]
+			edgeMap["attributes"] = attributesMap
 			edgesList = append(edgesList, edgeMap)
 		}
 		//节点处理
 		if !utils.IsExitInArray(tempResult["id"], nodeIdList) {
 			nodeIdList = append(nodeIdList, tempResult["id"])
-			nodeMap["symbolSize"] = utils.CountInArray(tempResult["id"], idList) * 50
-			nodeMap["name"] = tempResult["name"]
+			nodeMap["size"] = utils.CountInArray(tempResult["id"], idList) * 30
+			nodeMap["color"] = utils.CreateColor()
+			nodeMap["label"] = tempResult["name"]
 			nodeMap["x"] = tempResult["x"]
 			nodeMap["y"] = tempResult["y"]
-			nodeMap["itemStyle"] = ""
-			nodeMap["y"] = tempResult["y"]
-			categoryMap := make(map[string]int)
-			index := utils.GetIndexInArray(tempResult["legend"], legendList)
-			categoryMap["modularity_class"] = index
-			nodeMap["attributes"] = categoryMap
+			nodeMap["attributes"] = attributesMap
 			nodeMap["id"] = tempResult["id"]
-			nodeMap["label"] = normalMap
-			nodeMap["category"] = index
-			nodeMap["value"] = tempResult["value"]
 			nodeList = append(nodeList, nodeMap)
 		}
-	}
-	//分类信息处理
-	categoryList := make([]map[string]string, 0)
-	for _, legend := range legendList {
-		categoryMap := make(map[string]string)
-		categoryMap["name"] = legend
-		categoryList = append(categoryList, categoryMap)
 	}
 	//节点信息去重
 	resultMap["nodes"] = nodeList
 	resultMap["edges"] = edgesList
-	resultMap["categories"] = categoryList
 	return &resultMap, nil
 }
