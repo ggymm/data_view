@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-09 14:39:54
+Date: 2019-04-14 12:30:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,8 +34,9 @@ CREATE TABLE `chart_item` (
   `item_width` bigint(20) DEFAULT NULL,
   `item_x` bigint(20) DEFAULT NULL,
   `item_y` bigint(20) DEFAULT NULL,
+  `item_version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for data_source
@@ -56,7 +57,7 @@ CREATE TABLE `data_source` (
   `edit_user` bigint(20) DEFAULT NULL COMMENT '编辑者',
   `del_flag` int(1) DEFAULT NULL COMMENT '是否删除（1：存在；0：删除）',
   PRIMARY KEY (`data_source_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for screen_instance
@@ -75,5 +76,6 @@ CREATE TABLE `screen_instance` (
   `instance_title` varchar(30) DEFAULT NULL,
   `instance_view_img` mediumtext,
   `instance_width` bigint(20) DEFAULT NULL,
+  `instance_version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`instance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;

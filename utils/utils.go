@@ -70,7 +70,7 @@ func CreateColor() string {
 判断元素在数组中出现的次数
 */
 func CountInArray(a string, b []string) int {
-	var result int = 0
+	var result = 0
 	for i := 0; i < len(b); i++ {
 		if a == b[i] {
 			result++
@@ -83,7 +83,7 @@ func CountInArray(a string, b []string) int {
 判断元素在数组中的位置
 */
 func GetIndexInArray(a string, b []string) int {
-	var result int = 0
+	var result = 0
 	for i := 0; i < len(b); i++ {
 		if a == b[i] {
 			result = i
@@ -97,7 +97,7 @@ func GetIndexInArray(a string, b []string) int {
 判断元素在数组中是否存在
 */
 func IsExitInArray(a string, b []string) bool {
-	var result bool = false
+	var result = false
 	for i := 0; i < len(b); i++ {
 		if a == b[i] {
 			result = true
