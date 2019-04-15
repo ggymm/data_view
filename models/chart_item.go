@@ -4,7 +4,6 @@ import (
 	"data_view/database"
 	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 type ChartItem struct {
@@ -16,7 +15,7 @@ type ChartItem struct {
 	ItemData      string `xorm:"text 'item_data'"`
 	ItemHeight    uint64 `xorm:"bigint(20) 'item_height'"`
 	ItemI         string `xorm:"varchar(20) 'item_i'"`
-	ItemInterval  string `xorm:"varchar(10) 'item_interval'"`
+	ItemInterval  uint64 `xorm:"bigint(20) 'item_interval'"`
 	ItemOption    string `xorm:"text 'item_option'"`
 	ItemRefresh   string `xorm:"varchar(10) 'item_refresh'"`
 	ItemWidth     uint64 `xorm:"bigint(20) 'item_width'"`
@@ -75,7 +74,7 @@ func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64, ve
 		chartItem.ItemRefresh = chartItemObject["refresh"].(string)
 		chartItem.ItemChartData = chartItemObject["chartData"].(string)
 		chartItem.ItemData = chartItemObject["data"].(string)
-		chartItem.ItemInterval = strconv.FormatFloat(chartItemObject["interval"].(float64), 'f', -1, 64)
+		chartItem.ItemInterval = uint64(chartItemObject["interval"].(float64))
 		chartItem.ItemOption = chartItemObject["option"].(string)
 		chartItem.ItemVersion = version
 		if _, err := database.DB.
