@@ -120,7 +120,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	edgesList := make([]map[string]interface{}, 0)
 	nodeList := make([]interface{}, 0)
 	normalMap := make(map[string]string)
-	normalMap["show"] = "true"
 	nodeIdList := make([]string, 0)
 	for i, tempResult := range tempResults {
 		nodeMap := make(map[string]interface{})
@@ -142,7 +141,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 			nodeMap["x"] = tempResult["x"]
 			nodeMap["y"] = tempResult["y"]
 			nodeMap["itemStyle"] = ""
-			nodeMap["y"] = tempResult["y"]
 			categoryMap := make(map[string]int)
 			index := utils.GetIndexInArray(tempResult["legend"], legendList)
 			categoryMap["modularity_class"] = index
@@ -150,7 +148,6 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 			nodeMap["id"] = tempResult["id"]
 			nodeMap["label"] = normalMap
 			nodeMap["category"] = index
-			nodeMap["value"] = tempResult["value"]
 			nodeList = append(nodeList, nodeMap)
 		}
 	}
