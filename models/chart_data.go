@@ -11,6 +11,7 @@ import (
 	"data_view/models/charts/relation_one"
 	"data_view/models/charts/relation_three"
 	"data_view/models/charts/relation_two"
+	"data_view/models/charts/rotation_list"
 	"data_view/utils"
 	"database/sql"
 	"errors"
@@ -43,6 +44,7 @@ const (
 	RelationFour                = "relationFour"
 	RelationFive                = "relationFive"
 	WordCloud                   = "wordCloud"
+	RotationList                = "rotationList"
 )
 
 type ChartData interface {
@@ -78,6 +80,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = relation_five.New()
 	} else if strings.EqualFold(chartType, WordCloud) { //词云
 		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, RotationList) { //轮播列表
+		chartData = rotation_list.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
