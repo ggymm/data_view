@@ -2,8 +2,8 @@ package models
 
 import (
 	"data_view/database"
+	"encoding/json"
 	"fmt"
-	"strconv"
 )
 
 type ChartItem struct {
@@ -15,7 +15,7 @@ type ChartItem struct {
 	ItemData      string `xorm:"text 'item_data'"`
 	ItemHeight    uint64 `xorm:"bigint(20) 'item_height'"`
 	ItemI         string `xorm:"varchar(20) 'item_i'"`
-	ItemInterval  string `xorm:"varchar(10) 'item_interval'"`
+	ItemInterval  uint64 `xorm:"bigint(20) 'item_interval'"`
 	ItemOption    string `xorm:"text 'item_option'"`
 	ItemRefresh   string `xorm:"varchar(10) 'item_refresh'"`
 	ItemWidth     uint64 `xorm:"bigint(20) 'item_width'"`
@@ -35,6 +35,7 @@ const Order = "item_i desc"
  */
 //noinspection GoNilness
 func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]interface{}, error) {
+	var dataResults = make([]map[string]interface{}, 0)
 	querySqlTemp := "select item_i as i, " +
 		"item_x as `x`, " +
 		"item_y as `y`, " +
@@ -47,10 +48,13 @@ func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]in
 		"item_data as `data`, " +
 		"item_interval as `interval`, " +
 		"item_option as `option` " +
-		"from chart_item where instance_id = %d and version = %d"
+		"from chart_item where instance_id = %d and item_version = %d"
 	querySql := fmt.Sprintf(querySqlTemp, instanceId, version)
-	dataResults, err := database.DB.SQL(querySql).QueryInterface()
+	jsonData, err := database.DB.SQL(querySql).Query().Json()
 	if err != nil {
+		return &dataResults, err
+	}
+	if err := json.Unmarshal([]byte(jsonData), &dataResults); err != nil {
 		return &dataResults, err
 	}
 	return &dataResults, nil
@@ -70,7 +74,7 @@ func SaveChartItem(chartItemList []map[string]interface{}, instanceId uint64, ve
 		chartItem.ItemRefresh = chartItemObject["refresh"].(string)
 		chartItem.ItemChartData = chartItemObject["chartData"].(string)
 		chartItem.ItemData = chartItemObject["data"].(string)
-		chartItem.ItemInterval = strconv.FormatFloat(chartItemObject["interval"].(float64), 'f', -1, 64)
+		chartItem.ItemInterval = uint64(chartItemObject["interval"].(float64))
 		chartItem.ItemOption = chartItemObject["option"].(string)
 		chartItem.ItemVersion = version
 		if _, err := database.DB.

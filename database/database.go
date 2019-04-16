@@ -3,10 +3,10 @@ package database
 import (
 	"data_view/config"
 	"fmt"
-	"github.com/go-xorm/core"
-	"github.com/go-xorm/xorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/pelletier/go-toml"
+	"github.com/xormplus/core"
+	"github.com/xormplus/xorm"
 )
 
 var (

@@ -179,8 +179,8 @@ func UpdateScreenInstance(screenInstanceJson *ScreenInstanceJson, id uint64, edi
 	screenInstance.EditUser = editUser
 	screenInstance.DelFlag = constant.IsExist
 	if _, err := database.DB.
-		Table(new(DataSource)).
-		Where(DataSourceSelectCondition, id, constant.IsExist).
+		Table(new(ScreenInstance)).
+		Where(ScreenInstanceSelectCondition, id, constant.IsExist).
 		Update(screenInstance); err != nil {
 		return err
 	}
