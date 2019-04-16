@@ -152,13 +152,13 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 		categoryMap["name"] = legend
 		categoryMap["keyword"] = make(map[string]string)
 		for key, value := range legendMap {
-			if key == legend {
+			if strings.EqualFold(key, legend) {
 				categoryMap["base"] = value
 			}
 		}
 		categoryList = append(categoryList, categoryMap)
 	}
-	//节点信息去重
+	//拼接最后结果
 	resultMap["nodes"] = nodeList
 	resultMap["edges"] = edgesList
 	resultMap["categories"] = categoryList
