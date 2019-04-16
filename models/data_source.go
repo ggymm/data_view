@@ -111,7 +111,6 @@ func GetDataSourceById(id uint64) (*DataSource, error) {
  * 根据ID删除数据
  * @method DeleteDataSourceById
  * @param [uint64] id [ID]
- * @return [*DataSource] [对象]
  * @return [error] [错误]
  */
 func DeleteDataSourceById(id uint64) error {

@@ -52,6 +52,7 @@ func newApp() (api *iris.Application) {
 			dataViewApi.PartyFunc("/screen_instance", func(screenInstanceApi router.Party) {
 				screenInstanceApi.Get("/", controllers.GetScreenInstanceList)
 				screenInstanceApi.Get("/{id:uint64}", controllers.GetScreenInstance)
+				screenInstanceApi.Delete("/{id:uint64}", controllers.DeleteScreenInstance)
 				screenInstanceApi.Post("/", controllers.SaveScreenInstance)
 				screenInstanceApi.Put("/{id:uint64}", controllers.UpdateScreenInstance)
 			})

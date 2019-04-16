@@ -123,6 +123,23 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
 }
 
 /**
+ * 根据ID删除数据
+ * @method DeleteScreenInstanceById
+ * @param [uint64] id [ID]
+ * @return [error] [错误]
+ */
+func DeleteScreenInstanceById(id uint64) error {
+	// 根据ID删除数据
+	if _, err := database.DB.
+		Table(new(ScreenInstance)).
+		Where(ScreenInstanceSelectCondition, id, constant.IsExist).
+		Update(map[string]interface{}{constant.DelFlag: constant.IsNotExist}); err != nil {
+		return err
+	}
+	return nil
+}
+
+/**
  * 保存大屏实例
  * @method SaveScreenInstance
  * @param [ScreenInstanceJson] screenInstanceJson [可视化大屏对象]

@@ -54,6 +54,28 @@ func GetScreenInstance(context iris.Context) {
 	return
 }
 
+func DeleteScreenInstance(context iris.Context) {
+	id, err := context.Params().GetUint64("id")
+	if err != nil {
+		// 错误的请求
+		context.StatusCode(iris.StatusBadRequest)
+		// 请求参数错误，不能正确格式化
+		_, _ = context.JSON(ApiResourceError(constant.RequestBodyError))
+		return
+	}
+	// 更新数据库
+	if err := models.DeleteScreenInstanceById(id); err != nil {
+		// 错误的请求
+		context.StatusCode(iris.StatusInternalServerError)
+		// 更新数据库错误
+		_, _ = context.JSON(ApiResourceError(err.Error()))
+		return
+	}
+	context.StatusCode(iris.StatusOK)
+	_, _ = context.JSON(ApiResourceSuccess(nil))
+	return
+}
+
 func SaveScreenInstance(context iris.Context) {
 	// 格式化输入信息
 	screenInstanceJson := new(models.ScreenInstanceJson)
