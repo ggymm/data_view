@@ -48,8 +48,8 @@ func Duplicate(arr []string) (newArr []string) {
 }
 
 /*
-生成随机颜色
-*/
+ * 生成随机颜色
+ */
 func CreateColor() string {
 	red := strings.ToUpper(strconv.FormatInt(int64(rand.Intn(256)), 16))
 	if len(red) == 1 {

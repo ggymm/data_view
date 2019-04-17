@@ -28,7 +28,9 @@
 
 #reids
 [redis]
-  Addr = "127.0.0.1:6379"
-  Password = ""
-  DB = 0
+  addr = "127.0.0.1:6379"
+  password = ""
+  db = 0
 
+[image]
+  path = 'D:/home/data_view/image/'

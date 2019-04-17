@@ -17,3 +17,5 @@ const (
 )
 
 const EmptyString = ""
+
+const MaxSize = 5 << 20
