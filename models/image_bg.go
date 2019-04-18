@@ -11,7 +11,7 @@ type ImageBg struct {
 	AddUser   uint64    `xorm:"bigint(20)"`
 	ImageId   uint64    `xorm:"pk autoincr notnull 'image_id'"`
 	ImageName string    `xorm:"varchar(200) 'image_name'"`
-	ImagePath string    `xorm:"varchar(500) 'image_name'"`
+	ImagePath string    `xorm:"varchar(500) 'image_path'"`
 	ImageSize uint64    `xorm:"bigint(20) 'image_size'"`
 	DelFlag   uint      `xorm:"int(1)"`
 	EditTime  time.Time `xorm:"updated"`

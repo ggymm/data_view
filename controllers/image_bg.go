@@ -78,7 +78,7 @@ func SaveImage(context iris.Context) {
 }
 
 func GetImage(context iris.Context) {
-	_ = context.ServeFile("C:/Users/gongym/Pictures/5ad8754dd6199a368334ecc7f80af646.jpg", true)
+	_ = context.ServeFile("C:/Users/gongym/Pictures/template_1.png", true)
 	return
 }
 
