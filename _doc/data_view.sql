@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-14 12:30:56
+Date: 2019-04-18 10:30:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `chart_item` (
   `item_data` text,
   `item_height` bigint(20) DEFAULT NULL,
   `item_i` varchar(20) DEFAULT NULL,
-  `item_interval` varchar(10) DEFAULT NULL,
+  `item_interval` bigint(20) DEFAULT NULL,
   `item_option` text,
   `item_refresh` varchar(10) DEFAULT NULL,
   `item_width` bigint(20) DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `chart_item` (
   `item_y` bigint(20) DEFAULT NULL,
   `item_version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for data_source
@@ -57,7 +57,24 @@ CREATE TABLE `data_source` (
   `edit_user` bigint(20) DEFAULT NULL COMMENT '编辑者',
   `del_flag` int(1) DEFAULT NULL COMMENT '是否删除（1：存在；0：删除）',
   PRIMARY KEY (`data_source_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for image_bg
+-- ----------------------------
+DROP TABLE IF EXISTS `image_bg`;
+CREATE TABLE `image_bg` (
+  `image_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `image_name` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `image_path` varchar(500) CHARACTER SET latin1 DEFAULT NULL,
+  `image_size` bigint(20) DEFAULT NULL,
+  `add_time` datetime DEFAULT NULL COMMENT '添加时间',
+  `add_user` bigint(20) DEFAULT NULL COMMENT '添加者',
+  `edit_time` datetime DEFAULT NULL COMMENT '编辑时间',
+  `edit_user` bigint(20) DEFAULT NULL COMMENT '编辑者',
+  `del_flag` int(1) DEFAULT NULL COMMENT '是否删除（1：存在；0：删除）',
+  PRIMARY KEY (`image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for screen_instance
@@ -78,4 +95,4 @@ CREATE TABLE `screen_instance` (
   `instance_width` bigint(20) DEFAULT NULL,
   `instance_version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`instance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
