@@ -3,6 +3,8 @@ package controllers
 import (
 	"crypto/md5"
 	"data_view/config"
+	"data_view/middleware"
+	"data_view/models"
 	"encoding/hex"
 	"github.com/kataras/iris"
 	"io/ioutil"
@@ -11,6 +13,21 @@ import (
 	"strings"
 )
 
+func GetImageBgList(context iris.Context) {
+	// 查询数据库
+	list, err := models.GetImageBgList()
+	if err != nil {
+		// 错误的请求
+		context.StatusCode(iris.StatusBadRequest)
+		// 查询数据库错误
+		_, _ = context.JSON(ApiResourceError(err.Error()))
+		return
+	}
+	context.StatusCode(iris.StatusOK)
+	_, _ = context.JSON(ApiResourceSuccess(list))
+	return
+}
+
 func SaveImage(context iris.Context) {
 	image, imageInfo, err := context.FormFile("background_image")
 	if err != nil {
@@ -18,6 +35,7 @@ func SaveImage(context iris.Context) {
 		_, _ = context.JSON(ApiResourceError(err.Error()))
 		return
 	}
+	defer image.Close()
 	imageByte, readErr := ioutil.ReadAll(image)
 	if readErr != nil {
 		context.StatusCode(iris.StatusInternalServerError)
@@ -38,13 +56,22 @@ func SaveImage(context iris.Context) {
 			return
 		}
 	}
-	writeErr := ioutil.WriteFile(savePathWithPrefix+string(filepath.Separator)+imageInfo.Filename, imageByte, 0666)
+	imageName := imageInfo.Filename
+	writeErr := ioutil.WriteFile(savePathWithPrefix+string(filepath.Separator)+imageName, imageByte, 0666)
 	if writeErr != nil {
 		context.StatusCode(iris.StatusInternalServerError)
 		_, _ = context.JSON(ApiResourceError(writeErr.Error()))
 		return
 	}
-	defer image.Close()
+	editUser := middleware.GetUser()
+	imageSize := imageInfo.Size
+	if err := models.SaveImageBg(imageName, savePath, imageSize, editUser); err != nil {
+		// 程序内部错误
+		context.StatusCode(iris.StatusInternalServerError)
+		// 保存数据库错误
+		_, _ = context.JSON(ApiResourceError(err.Error()))
+		return
+	}
 	context.StatusCode(iris.StatusOK)
 	_, _ = context.JSON(ApiResourceSuccess(nil))
 	return
