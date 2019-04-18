@@ -54,7 +54,7 @@ func (screenInstanceParams *ScreenInstanceParams) setStartIndex() error {
 	if err := utils.StrToUint(startIndexStringReplaced, &startIndex); err != nil {
 		return err
 	}
-	screenInstanceParams.StartIndex = startIndex
+	screenInstanceParams.StartIndex = startIndex + 1
 	return nil
 }
 
