@@ -54,8 +54,12 @@ func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]in
 	if err != nil {
 		return &dataResults, err
 	}
-	if err := json.Unmarshal([]byte(jsonData), &dataResults); err != nil {
-		return &dataResults, err
+	if len(jsonData) > 0 {
+		if err := json.Unmarshal([]byte(jsonData), &dataResults); err != nil {
+			return &dataResults, err
+		}
+	} else {
+		return &dataResults, nil
 	}
 	return &dataResults, nil
 }

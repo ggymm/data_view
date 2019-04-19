@@ -62,7 +62,7 @@ func newApp() (api *iris.Application) {
 			dataViewApi.PartyFunc("/image", func(ImageApi router.Party) {
 				ImageApi.Get("/list", controllers.GetImageBgList)
 				ImageApi.Post("/", iris.LimitRequestBodySize(constant.MaxSize), controllers.SaveImage)
-				ImageApi.Get("/{md5:string}", controllers.GetImage)
+				ImageApi.Get("/{id:uint64}", controllers.GetImage)
 			})
 		})
 	}

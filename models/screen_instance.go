@@ -16,7 +16,7 @@ type ScreenInstance struct {
 	EditTime                time.Time `xorm:"updated"`
 	EditUser                uint64    `xorm:"bigint(20)"`
 	InstanceBackgroundColor string    `xorm:"varchar(20) 'instance_background_color'"`
-	InstanceBackgroundImg   string    `xorm:"varchar(200) 'instance_background_img'"`
+	InstanceBackgroundImg   uint64    `xorm:"bigint(20) 'instance_background_img'"`
 	InstanceHeight          uint64    `xorm:"bigint(20) 'instance_height'"`
 	InstanceTitle           string    `xorm:"varchar(30) 'instance_title'"`
 	InstanceViewImg         string    `xorm:"mediumtext 'instance_view_img'"`
@@ -26,7 +26,7 @@ type ScreenInstance struct {
 
 type ScreenInstanceJson struct {
 	InstanceBackgroundColor string                   `json:"InstanceBackgroundColor"`
-	InstanceBackgroundImg   string                   `json:"InstanceBackgroundImg"`
+	InstanceBackgroundImg   uint64                   `json:"InstanceBackgroundImg"`
 	InstanceHeight          uint64                   `json:"InstanceHeight" validate:"required"`
 	InstanceTitle           string                   `json:"InstanceTitle"`
 	InstanceViewImg         string                   `json:"InstanceViewImg" validate:"required"`
@@ -41,6 +41,7 @@ type ScreenInstanceParams struct {
 	InstanceWidth           uint64
 	InstanceHeight          uint64
 	InstanceBackgroundColor string
+	InstanceBackgroundImg   uint64
 	InstanceVersion         uint64
 	ChartItems              []map[string]interface{}
 	StartIndex              uint64
@@ -109,6 +110,7 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
 	screenInstanceParams.InstanceWidth = screenInstance.InstanceWidth
 	screenInstanceParams.InstanceHeight = screenInstance.InstanceHeight
 	screenInstanceParams.InstanceBackgroundColor = screenInstance.InstanceBackgroundColor
+	screenInstanceParams.InstanceBackgroundImg = screenInstance.InstanceBackgroundImg
 	screenInstanceParams.InstanceVersion = screenInstance.InstanceVersion
 	// 根据可视化大屏实例ID获取图表信息列表
 	chartItems, err := GetChartItemByInstance(id, screenInstance.InstanceVersion)
@@ -116,9 +118,14 @@ func GetScreenInstanceById(id uint64) (*ScreenInstanceParams, error) {
 		return screenInstanceParams, err
 	}
 	screenInstanceParams.ChartItems = *chartItems
-	if err := screenInstanceParams.setStartIndex(); err != nil {
-		return screenInstanceParams, err
+	if len(screenInstanceParams.ChartItems) > 0 {
+		if err := screenInstanceParams.setStartIndex(); err != nil {
+			return screenInstanceParams, err
+		}
+	} else {
+		screenInstanceParams.StartIndex = 0
 	}
+
 	return screenInstanceParams, nil
 }
 

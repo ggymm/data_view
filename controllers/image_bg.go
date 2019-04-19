@@ -3,6 +3,7 @@ package controllers
 import (
 	"crypto/md5"
 	"data_view/config"
+	"data_view/constant"
 	"data_view/middleware"
 	"data_view/models"
 	"encoding/hex"
@@ -78,7 +79,27 @@ func SaveImage(context iris.Context) {
 }
 
 func GetImage(context iris.Context) {
-	_ = context.ServeFile("C:/Users/gongym/Pictures/template_1.png", true)
+	id, err := context.Params().GetUint64("id")
+	if err != nil {
+		// 错误的请求
+		context.StatusCode(iris.StatusBadRequest)
+		// 请求参数错误，不能正确格式化
+		_, _ = context.JSON(ApiResourceError(constant.RequestBodyError))
+		return
+	}
+	// 查询数据库
+	imageBg, err := models.GetImageBgById(id)
+	if err != nil {
+		// 程序内部错误
+		context.StatusCode(iris.StatusInternalServerError)
+		// 查询数据库错误
+		_, _ = context.JSON(ApiResourceError(err.Error()))
+		return
+	}
+	imagePath := imageBg.ImagePath
+	imageName := imageBg.ImageName
+	allPath := filepath.FromSlash(config.Config.Get("image.path").(string) + imagePath + string(filepath.Separator) + imageName)
+	_ = context.ServeFile(allPath, true)
 	return
 }
 

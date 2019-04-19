@@ -18,6 +18,8 @@ type ImageBg struct {
 	EditUser  uint64    `xorm:"bigint(20)"`
 }
 
+const ImageBgSelectCondition = "image_id = ? AND del_flag = ?"
+
 /**
  * 获取不分页列表
  * @method GetImageBgList
@@ -36,6 +38,24 @@ func GetImageBgList() ([]*ImageBg, error) {
 		return list, err
 	}
 	return list, nil
+}
+
+/**
+ * 根据ID获取数据
+ * @method GetDataSourceById
+ * @param [uint64] id [ID]
+ * @return [*DataSource] [对象]
+ * @return [error] [错误]
+ */
+func GetImageBgById(id uint64) (*ImageBg, error) {
+	imageBg := new(ImageBg)
+	// 根据ID获取数据
+	if _, err := database.DB.
+		Where(ImageBgSelectCondition, id, constant.IsExist).
+		Get(imageBg); err != nil {
+		return imageBg, err
+	}
+	return imageBg, nil
 }
 
 /**
