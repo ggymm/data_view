@@ -2,6 +2,7 @@ package models
 
 import (
 	"data_view/constant"
+	"data_view/models/charts/line_stacking"
 	"data_view/models/charts/pie_normal"
 	"data_view/models/charts/pie_rings"
 	"data_view/models/charts/plot_bubble"
@@ -56,31 +57,33 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 	var chartData ChartData
 	// 此处判断图表类型
 	chartType := chartDataParams.ChartType
-	if strings.EqualFold(chartType, PlotBubble) { //气泡散点图
+	if strings.EqualFold(chartType, PlotBubble) { // 气泡散点图
 		chartData = plot_bubble.New()
-	} else if strings.EqualFold(chartType, PieNormal) {
+	} else if strings.EqualFold(chartType, LineStacking) { // 堆叠折线图
+		chartData = line_stacking.New()
+	} else if strings.EqualFold(chartType, PieNormal) { // 普通饼图
 		chartData = pie_normal.New()
-	} else if strings.EqualFold(chartType, PieRing) { //环形饼图
+	} else if strings.EqualFold(chartType, PieRing) { // 环形饼图
 		chartData = pie_normal.New()
-	} else if strings.EqualFold(chartType, PieRings) { //环形饼图列表
+	} else if strings.EqualFold(chartType, PieRings) { // 环形饼图列表
 		chartData = pie_rings.New()
-	} else if strings.EqualFold(chartType, Pie2D) { //2D饼图
+	} else if strings.EqualFold(chartType, Pie2D) { // 2D饼图
 		chartData = pie_normal.New()
-	} else if strings.EqualFold(chartType, RadarBasic) { //基础雷达图
+	} else if strings.EqualFold(chartType, RadarBasic) { // 基础雷达图
 		chartData = radar_basic.New()
-	} else if strings.EqualFold(chartType, RelationOne) { //关系图1
+	} else if strings.EqualFold(chartType, RelationOne) { // 关系图1
 		chartData = relation_one.New()
-	} else if strings.EqualFold(chartType, RelationTwo) { //关系图2
+	} else if strings.EqualFold(chartType, RelationTwo) { // 关系图2
 		chartData = relation_two.New()
-	} else if strings.EqualFold(chartType, RelationThree) { //关系图3
+	} else if strings.EqualFold(chartType, RelationThree) { // 关系图3
 		chartData = relation_three.New()
-	} else if strings.EqualFold(chartType, RelationFour) { //关系图4
+	} else if strings.EqualFold(chartType, RelationFour) { // 关系图4
 		chartData = relation_four.New()
-	} else if strings.EqualFold(chartType, RelationFive) { //关系图5
+	} else if strings.EqualFold(chartType, RelationFive) { // 关系图5
 		chartData = relation_five.New()
-	} else if strings.EqualFold(chartType, WordCloud) { //词云
+	} else if strings.EqualFold(chartType, WordCloud) { // 词云
 		chartData = pie_normal.New()
-	} else if strings.EqualFold(chartType, RotationList) { //轮播列表
+	} else if strings.EqualFold(chartType, RotationList) { // 轮播列表
 		chartData = rotation_list.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
