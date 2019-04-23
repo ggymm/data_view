@@ -1,4 +1,4 @@
-package line_stacking
+package histogram_stacking
 
 import (
 	"data_view/constant"
@@ -8,14 +8,14 @@ import (
 	"strings"
 )
 
-type LineStackingGetData struct {
+type HistogramStackingGetData struct {
 }
 
-func New() *LineStackingGetData {
-	return &LineStackingGetData{}
+func New() *HistogramStackingGetData {
+	return &HistogramStackingGetData{}
 }
 
-func (lineStackingGetData *LineStackingGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramStackingGetData *HistogramStackingGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
 	sqlString := chartDataParams.Sql
 	rows, err := db.Query(sqlString)
 	if err != nil {
@@ -32,7 +32,7 @@ func (lineStackingGetData *LineStackingGetData) GetDataFromDB(db *sql.DB, chartD
 	}
 	return string(resultString), nil
 }
-func (lineStackingGetData *LineStackingGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramStackingGetData *HistogramStackingGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	return "", nil
 }
 
