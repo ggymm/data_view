@@ -2,6 +2,7 @@ package models
 
 import (
 	"data_view/constant"
+	"data_view/models/charts/histogram_stacking"
 	"data_view/models/charts/line_stacking"
 	"data_view/models/charts/pie_normal"
 	"data_view/models/charts/pie_rings"
@@ -61,6 +62,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = plot_bubble.New()
 	} else if strings.EqualFold(chartType, LineStacking) { // 堆叠折线图
 		chartData = line_stacking.New()
+	} else if strings.EqualFold(chartType, HistogramStacking) { // 堆叠柱状图
+		chartData = histogram_stacking.New()
 	} else if strings.EqualFold(chartType, PieNormal) { // 普通饼图
 		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, PieRing) { // 环形饼图
