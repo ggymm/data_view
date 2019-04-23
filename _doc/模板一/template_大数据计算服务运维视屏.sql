@@ -1,11 +1,13 @@
+-- ----------------------------
+-- image_bg（背景图片）
+-- ----------------------------
 INSERT INTO `image_bg` (`add_time`, `add_user`, `edit_time`, `edit_user`, `del_flag`, `image_name`, `image_path`,
                         `image_size`)
 VALUES ('2019-04-22 11:21:09.699', '1', '2019-04-22 11:21:09.699', '1', '1', '云资源监控.png',
-        'aed0174f\\5bea814e\\0e0463b3\\ee32b3fd', '61970');
+        '955fe43d\\a0e2aa75\\4a64cedd\\77e27767', '61983');
 
 -- ----------------------------
--- 需要先插入背景图数据
--- 修改instance_background_img字段的值
+-- screen_instance（大屏实例）
 -- ----------------------------
 INSERT INTO `screen_instance` (`add_time`, `add_user`, `edit_time`, `edit_user`, `del_flag`, `instance_title`,
                                `instance_background_color`, `instance_background_img`, `instance_height`,
@@ -17,8 +19,7 @@ VALUES ('2019-04-22 14:15:59.15', '1', '2019-04-22 14:15:59.15', '1', '1', '大�
 
 
 -- ----------------------------
--- screen_instance表插入数据的ID是instance_id字段的值
--- 此阶段是全部标题相关
+-- 标题相关（共8个）
 -- ----------------------------
 
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -85,4 +86,9 @@ VALUES (@@IDENTITY,
         'titleText', 'false', '[]', '30', 'chart10', '8000',
         '{\"title\":\"资源耗时最大任务\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '200', '895', '715', '1');
+
+
+-- ----------------------------
+-- 任务情况（任务类型分布&任务成功比例）
+-- ----------------------------
 
