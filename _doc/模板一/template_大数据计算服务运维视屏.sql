@@ -43,7 +43,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart3', '8000',
+        'titleText', 'false', '[]', '30', 'chart2', '8000',
         '{\"title\":\"MaxCompute任务总数\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '250', '60', '305', '1');
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -51,7 +51,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart6', '8000',
+        'titleText', 'false', '[]', '30', 'chart3', '8000',
         '{\"title\":\"任务情况\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '125', '895', '305', '1');
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -59,7 +59,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart7', '8000',
+        'titleText', 'false', '[]', '30', 'chart4', '8000',
         '{\"title\":\"表平均容量\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '130', '1545', '305', '1');
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -67,7 +67,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart8', '8000',
+        'titleText', 'false', '[]', '30', 'chart5', '8000',
         '{\"title\":\"表储存容量\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '135', '60', '715', '1');
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -75,7 +75,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart9', '8000',
+        'titleText', 'false', '[]', '30', 'chart6', '8000',
         '{\"title\":\"运行耗时最长任务\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '200', '495', '715', '1');
 INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `item_choose`, `item_data`,
@@ -83,7 +83,7 @@ INSERT INTO `chart_item` (`instance_id`, `item_chart_data`, `item_chart_type`, `
                           `item_x`, `item_y`, `item_version`)
 VALUES (@@IDENTITY,
         '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
-        'titleText', 'false', '[]', '30', 'chart10', '8000',
+        'titleText', 'false', '[]', '30', 'chart7', '8000',
         '{\"title\":\"资源耗时最大任务\",\"fontColor\":\"#ffffff\",\"fontSize\":24,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
         'false', '200', '895', '715', '1');
 

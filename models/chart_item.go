@@ -48,7 +48,7 @@ func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]in
 		"item_data as `data`, " +
 		"item_interval as `interval`, " +
 		"item_option as `option` " +
-		"from chart_item where instance_id = %d and item_version = %d"
+		"from chart_item where instance_id = %d and item_version = %d order by item_i desc"
 	querySql := fmt.Sprintf(querySqlTemp, instanceId, version)
 	jsonData, err := database.DB.SQL(querySql).Query().Json()
 	if err != nil {
