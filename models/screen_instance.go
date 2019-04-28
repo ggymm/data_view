@@ -49,7 +49,7 @@ type ScreenInstanceParams struct {
 
 func (screenInstanceParams *ScreenInstanceParams) setStartIndex() error {
 	chartItems := screenInstanceParams.ChartItems
-	startIndexString := chartItems[0]["i"]
+	startIndexString := chartItems[len(chartItems)-1]["i"]
 	startIndexStringReplaced := strings.Replace(startIndexString.(string), "chart", "", -1)
 	var startIndex uint64
 	if err := utils.StrToUint(startIndexStringReplaced, &startIndex); err != nil {

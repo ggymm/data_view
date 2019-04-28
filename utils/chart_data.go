@@ -20,6 +20,7 @@ type ChartDataParams struct {
 	Value          string
 	Max            string
 	Stack          string
+	Data           string
 }
 
 func NewChartDataRequest(context iris.Context) (*ChartDataParams, error) {
@@ -34,6 +35,7 @@ func NewChartDataRequest(context iris.Context) (*ChartDataParams, error) {
 		Value:          context.URLParamTrim("value"),
 		Max:            context.URLParamTrim("max"),
 		Stack:          context.URLParamTrim("stack"),
+		Data:           context.URLParamTrim("data"),
 	}
 	if strings.EqualFold(dataSourceType, constant.DataBase) {
 		chartDataParams.Database = context.URLParamTrim("database")

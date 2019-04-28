@@ -2,6 +2,7 @@ package models
 
 import (
 	"data_view/constant"
+	"data_view/models/charts/counter_basic"
 	"data_view/models/charts/histogram_stacking"
 	"data_view/models/charts/line_stacking"
 	"data_view/models/charts/pie_normal"
@@ -47,6 +48,7 @@ const (
 	RelationFive                = "relationFive"
 	WordCloud                   = "wordCloud"
 	RotationList                = "rotationList"
+	Counter                     = "counter"
 )
 
 type ChartData interface {
@@ -88,6 +90,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, RotationList) { // 轮播列表
 		chartData = rotation_list.New()
+	} else if strings.EqualFold(chartType, Counter) { // 轮播列表
+		chartData = counter_basic.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
