@@ -4,6 +4,7 @@ import (
 	"data_view/constant"
 	"data_view/models/charts/counter_basic"
 	"data_view/models/charts/histogram_stacking"
+	"data_view/models/charts/line_normal"
 	"data_view/models/charts/line_stacking"
 	"data_view/models/charts/pie_normal"
 	"data_view/models/charts/pie_rings"
@@ -62,6 +63,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 	chartType := chartDataParams.ChartType
 	if strings.EqualFold(chartType, PlotBubble) { // 气泡散点图
 		chartData = plot_bubble.New()
+	} else if strings.EqualFold(chartType, LineNormal) { // 标准折线图
+		chartData = line_normal.New()
 	} else if strings.EqualFold(chartType, LineStacking) { // 堆叠折线图
 		chartData = line_stacking.New()
 	} else if strings.EqualFold(chartType, HistogramStacking) { // 堆叠柱状图
