@@ -80,6 +80,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = pie_rings.New()
 	} else if strings.EqualFold(chartType, Pie2D) { // 2D饼图
 		chartData = pie_normal.New()
+	} else if strings.EqualFold(chartType, PiePercent) { // 环形百分比饼图
+		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, RadarBasic) { // 基础雷达图
 		chartData = radar_basic.New()
 	} else if strings.EqualFold(chartType, RelationOne) { // 关系图1
