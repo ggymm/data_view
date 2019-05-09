@@ -1,4 +1,4 @@
-package line_normal
+package line_stacking_area
 
 import (
 	"data_view/constant"
@@ -87,22 +87,29 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	}
 	//规范数据
 	yList := make([]interface{}, 0)
+	xList := make([]interface{}, 0)
+	i := 0
 	for _, legend := range utils.Duplicate(legendList) {
 		yMap := make(map[string]interface{})
 		valueResultList := make([]int, 0)
 		for _, tempResult := range tempResults {
 			if strings.EqualFold(legend, tempResult["legend"]) {
+				if 0 == i {
+					xList = append(xList, tempResult["x"])
+				}
 				yInt, err := strconv.Atoi(tempResult["y"])
 				if err == nil {
 					valueResultList = append(valueResultList, yInt)
 				}
 			}
 		}
+		i++
 		yMap["name"] = legend
 		yMap["value"] = valueResultList
 		yList = append(yList, yMap)
 	}
 	resultMap["legend"] = utils.Duplicate(legendList)
 	resultMap["y"] = yList
+	resultMap["x"] = xList
 	return &resultMap, nil
 }
