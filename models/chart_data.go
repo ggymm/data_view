@@ -73,6 +73,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = line_stacking_area.New()
 	} else if strings.EqualFold(chartType, HistogramGradient) { // 渐变柱状图
 		chartData = histogram_gradient.New()
+	} else if strings.EqualFold(chartType, HistogramGradientHorizontal) { // 水平柱状图
+		chartData = histogram_gradient.New()
 	} else if strings.EqualFold(chartType, HistogramStacking) { // 堆叠柱状图
 		chartData = histogram_stacking.New()
 	} else if strings.EqualFold(chartType, PieNormal) { // 普通饼图
