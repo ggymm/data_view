@@ -10,15 +10,15 @@ import (
 	"strings"
 )
 
-type PlotBubbleGetData struct {
+type HistogramGradientGetData struct {
 }
 
-func New() *PlotBubbleGetData {
-	return &PlotBubbleGetData{}
+func New() *HistogramGradientGetData {
+	return &HistogramGradientGetData{}
 }
 
 //GetDataFromDB
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramGradientGetData *HistogramGradientGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
 	sqlString := chartDataParams.Sql
 	rows, err := db.Query(sqlString)
 	if err != nil {
@@ -36,7 +36,7 @@ func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataP
 	return string(resultString), nil
 }
 
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramGradientGetData *HistogramGradientGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	return "", nil
 }
 

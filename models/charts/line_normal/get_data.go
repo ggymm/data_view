@@ -9,15 +9,15 @@ import (
 	"strings"
 )
 
-type PlotBubbleGetData struct {
+type LineNormalGetData struct {
 }
 
-func New() *PlotBubbleGetData {
-	return &PlotBubbleGetData{}
+func New() *LineNormalGetData {
+	return &LineNormalGetData{}
 }
 
 //GetDataFromDB
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (lineNormalGetData *LineNormalGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
 	sqlString := chartDataParams.Sql
 	rows, err := db.Query(sqlString)
 	if err != nil {
@@ -35,7 +35,7 @@ func (plotBubbleGetData *PlotBubbleGetData) GetDataFromDB(db *sql.DB, chartDataP
 	return string(resultString), nil
 }
 
-func (plotBubbleGetData *PlotBubbleGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (lineNormalGetData *LineNormalGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	return "", nil
 }
 

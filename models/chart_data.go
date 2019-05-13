@@ -3,6 +3,7 @@ package models
 import (
 	"data_view/constant"
 	"data_view/models/charts/counter_basic"
+	"data_view/models/charts/gauge"
 	"data_view/models/charts/histogram_complex"
 	"data_view/models/charts/histogram_gradient"
 	"data_view/models/charts/histogram_stacking"
@@ -53,6 +54,7 @@ const (
 	WordCloud                   = "wordCloud"
 	RotationList                = "rotationList"
 	Counter                     = "counter"
+	Gauge                       = "gauge"
 )
 
 type ChartData interface {
@@ -108,6 +110,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = rotation_list.New()
 	} else if strings.EqualFold(chartType, Counter) { // 轮播列表
 		chartData = counter_basic.New()
+	} else if strings.EqualFold(chartType, Gauge) { // 仪表盘
+		chartData = gauge.New()
 	} else {
 		return constant.EmptyString, errors.New(constant.ChartTypeError)
 	}
