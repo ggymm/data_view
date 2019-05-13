@@ -95,20 +95,23 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*[]inte
 	dataResults = append(dataResults, categoryList)
 	// 后续数据处理
 	otherMap := make(map[string][]string)
+	// 为了遍历map时顺序不乱
+	otherList := make([]string, 0)
 	for _, tempResult := range tempResults {
 		other, ok := otherMap[tempResult["x"]]
 		if ok {
 			other = append(other, tempResult["y"])
 			otherMap[tempResult["x"]] = other
 		} else {
+			otherList = append(otherList, tempResult["x"])
 			otherMap[tempResult["x"]] = append(otherMap[tempResult["x"]], tempResult["y"])
 		}
 	}
 	// 格式化结果数据
-	for key, value := range otherMap {
+	for _, key := range otherList {
 		valueList := make([]string, 0)
 		valueList = append(valueList, key)
-		for _, data := range value {
+		for _, data := range otherMap[key] {
 			valueList = append(valueList, data)
 		}
 		dataResults = append(dataResults, valueList)
