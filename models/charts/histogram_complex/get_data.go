@@ -1,4 +1,4 @@
-package line_normal
+package histogram_complex
 
 import (
 	"data_view/constant"
@@ -9,15 +9,15 @@ import (
 	"strings"
 )
 
-type LineNormalGetData struct {
+type HistogramComplexGetData struct {
 }
 
-func New() *LineNormalGetData {
-	return &LineNormalGetData{}
+func New() *HistogramComplexGetData {
+	return &HistogramComplexGetData{}
 }
 
 //GetDataFromDB
-func (lineNormalGetData *LineNormalGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramComplexGetData *HistogramComplexGetData) GetDataFromDB(db *sql.DB, chartDataParams *utils.ChartDataParams) (result string, err error) {
 	sqlString := chartDataParams.Sql
 	rows, err := db.Query(sqlString)
 	if err != nil {
@@ -35,14 +35,15 @@ func (lineNormalGetData *LineNormalGetData) GetDataFromDB(db *sql.DB, chartDataP
 	return string(resultString), nil
 }
 
-func (lineNormalGetData *LineNormalGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
+func (histogramComplexGetData *HistogramComplexGetData) GetDataFromCsv(chartDataParams *utils.ChartDataParams) (result string, err error) {
 	return "", nil
 }
 
 func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[string]interface{}, error) {
 	// 图表所需要的字段和数据库中字段的对应关系
 	xField := chartDataParams.X
-	yField := chartDataParams.Y
+	nameField := chartDataParams.Name
+	valueField := chartDataParams.Value
 
 	// 返回值列表
 	resultMap := make(map[string]interface{})
@@ -73,36 +74,39 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 				value = string(col)
 			}
 			if strings.EqualFold(columns[i], xField) {
-				tempResultMap["x"] = value
+				tempResultMap[xField] = value
 			}
-			if strings.EqualFold(columns[i], yField) {
-				tempResultMap["y"] = value
-			}
-			if strings.EqualFold(columns[i], "name") {
+			if strings.EqualFold(columns[i], nameField) {
+				tempResultMap[nameField] = value
 				legendList = append(legendList, value)
-				tempResultMap["legend"] = value
+			}
+			if strings.EqualFold(columns[i], valueField) {
+				tempResultMap[valueField] = value
 			}
 		}
 		tempResults = append(tempResults, tempResultMap)
 	}
 	//规范数据
-	yList := make([]interface{}, 0)
+	valueList := make([]interface{}, 0)
 	for _, legend := range utils.Duplicate(legendList) {
-		yMap := make(map[string]interface{})
-		valueResultList := make([]int, 0)
+		valueMap := make(map[string]interface{})
+		xResultList := make([]string, 0)
+		yResultList := make([]int, 0)
 		for _, tempResult := range tempResults {
-			if strings.EqualFold(legend, tempResult["legend"]) {
-				yInt, err := strconv.Atoi(tempResult["y"])
+			if strings.EqualFold(legend, tempResult[nameField]) {
+				yInt, err := strconv.Atoi(tempResult[valueField])
 				if err == nil {
-					valueResultList = append(valueResultList, yInt)
+					yResultList = append(yResultList, yInt)
+					xResultList = append(xResultList, tempResult[xField])
 				}
 			}
 		}
-		yMap["name"] = legend
-		yMap["value"] = valueResultList
-		yList = append(yList, yMap)
+		valueMap["name"] = legend
+		valueMap["x"] = xResultList
+		valueMap["y"] = yResultList
+		valueList = append(valueList, valueMap)
 	}
 	resultMap["legend"] = utils.Duplicate(legendList)
-	resultMap["y"] = yList
+	resultMap["value"] = valueList
 	return &resultMap, nil
 }
