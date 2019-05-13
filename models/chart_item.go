@@ -48,8 +48,9 @@ func GetChartItemByInstance(instanceId uint64, version uint64) (*[]map[string]in
 		"item_data as `data`, " +
 		"item_interval as `interval`, " +
 		"item_option as `option` " +
-		"from chart_item where instance_id = %d and item_version = %d order by item_i + 0"
+		"from chart_item where instance_id = %d and item_version = %d order by REPLACE (item_i, 'chart', '') + 0"
 	querySql := fmt.Sprintf(querySqlTemp, instanceId, version)
+	fmt.Println(querySql)
 	jsonData, err := database.DB.SQL(querySql).Query().Json()
 	if err != nil {
 		return &dataResults, err
