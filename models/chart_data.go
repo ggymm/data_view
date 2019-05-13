@@ -3,6 +3,7 @@ package models
 import (
 	"data_view/constant"
 	"data_view/models/charts/counter_basic"
+	"data_view/models/charts/histogram_complex"
 	"data_view/models/charts/histogram_gradient"
 	"data_view/models/charts/histogram_stacking"
 	"data_view/models/charts/line_normal"
@@ -77,6 +78,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = histogram_gradient.New()
 	} else if strings.EqualFold(chartType, HistogramStacking) { // 堆叠柱状图
 		chartData = histogram_stacking.New()
+	} else if strings.EqualFold(chartType, HistogramComplex) { // 复合柱状图
+		chartData = histogram_complex.New()
 	} else if strings.EqualFold(chartType, PieNormal) { // 普通饼图
 		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, PieRing) { // 环形饼图
