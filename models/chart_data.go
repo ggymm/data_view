@@ -4,6 +4,7 @@ import (
 	"data_view/constant"
 	"data_view/models/charts/counter_basic"
 	"data_view/models/charts/gauge"
+	"data_view/models/charts/heat_basic"
 	"data_view/models/charts/histogram_complex"
 	"data_view/models/charts/histogram_gradient"
 	"data_view/models/charts/histogram_stacking"
@@ -94,6 +95,8 @@ func GetChartData(chartDataParams *utils.ChartDataParams) (result string, err er
 		chartData = pie_normal.New()
 	} else if strings.EqualFold(chartType, RadarBasic) { // 基础雷达图
 		chartData = radar_basic.New()
+	} else if strings.EqualFold(chartType, HeatBasic) { // 基础热力图
+		chartData = heat_basic.New()
 	} else if strings.EqualFold(chartType, RelationOne) { // 关系图1
 		chartData = relation_one.New()
 	} else if strings.EqualFold(chartType, RelationTwo) { // 关系图2
