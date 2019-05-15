@@ -964,7 +964,281 @@ VALUES
 -- ----------------------------
 -- MaxComputer任务总数
 -- ----------------------------
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"SELECT * FROM template_1_mcj_sum WHERE type = \'sum\'\",\"data\":\"data\",\"chartType\":\"counter\"}',
+    'counter',
+    'false',
+    '[]',
+    '30',
+    'chart26',
+    '8000',
+    '{\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":22,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"\",\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":12,\"fontWeight\":\"normal\"}}',
+    'false',
+    '105',
+    '100',
+    '360',
+    @version
+);
 
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
+    'titleText',
+    'false',
+    '[]',
+    '30',
+    'chart27',
+    '8000',
+    '{\"title\":\"同比\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":20,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '60',
+    '550',
+    '360',
+    @version
+);
+
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"SELECT * FROM template_1_mcj_sum WHERE type = \'year_on_tear\'\",\"data\":\"data\",\"chartType\":\"counter\"}',
+    'counter',
+    'false',
+    '[]',
+    '30',
+    'chart28',
+    '8000',
+    '{\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":18,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"%\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":18,\"fontWeight\":\"normal\"}}',
+    'false',
+    '60',
+    '610',
+    '360',
+    @version
+);
+
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"\",\"database\":\"\",\"fileName\":\"\",\"sql\":\"\",\"x\":\"\",\"name\":\"\"}',
+    'titleText',
+    'false',
+    '[]',
+    '30',
+    'chart29',
+    '8000',
+    '{\"title\":\"环比\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":20,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '60',
+    '680',
+    '360',
+    @version
+);
+
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"SELECT * FROM template_1_mcj_sum WHERE type = \'chain_ratio\'\",\"data\":\"data\",\"chartType\":\"counter\"}',
+    'counter',
+    'false',
+    '[]',
+    '30',
+    'chart30',
+    '8000',
+    '{\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":18,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"%\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":18,\"fontWeight\":\"normal\"}}',
+    'false',
+    '60',
+    '740',
+    '360',
+    @version
+);
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select * from template_1_mcj_line\",\"x\":\"x\",\"y\":\"y\",\"legend\":\"legend\",\"chartType\":\"lineStacking\"}',
+    'lineStacking',
+    'false',
+    '[]',
+    '275',
+    'chart31',
+    '8000',
+    '{\"title\":{\"text\":\"堆叠折线图\",\"left\":\"center\",\"textStyle\":{\"color\":\"#fff\"},\"show\":false},\"grid\":{\"top\":\"10\",\"left\":\"10\",\"right\":\"10\",\"bottom\":\"10\",\"containLabel\":true},\"legend\":{\"left\":\"1%\",\"top\":\"5%\",\"textStyle\":{\"color\":\"#fff\"},\"show\":false},\"tooltip\":{},\"dataset\":{\"source\":[[\"product\",\"1\",\"2\"],[\"12/01\",\"60\",\"80\"],[\"02/01\",\"50\",\"80\"],[\"03/01\",\"60\",\"80\"],[\"04/01\",\"60\",\"150\"],[\"05/01\",\"100\",\"90\"],[\"06/01\",\"70\",\"130\"],[\"07/01\",\"150\",\"50\"],[\"08/01\",\"70\",\"20\"],[\"09/01\",\"20\",\"90\"],[\"10/01\",\"55\",\"130\"],[\"11/01\",\"220\",\"40\"],[\"01/01\",\"100\",\"70\"]]},\"xAxis\":{\"name\":\"\",\"type\":\"category\",\"boundaryGap\":true,\"axisTick\":{\"show\":false},\"axisLabel\":{\"show\":false,\"textStyle\":{\"color\":\"#fff\"},\"rotate\":0},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"axisLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#FFFFFF\"}}},\"yAxis\":{\"name\":\"\",\"type\":\"value\",\"axisTick\":{\"show\":false},\"axisLabel\":{\"show\":true,\"textStyle\":{\"color\":\"#fff\"}},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"splitArea\":{\"show\":false,\"areaStyle\":{\"color\":[\"rgba(250,250,250,0.3)\",\"rgba(200,200,200,0.3)\"]}},\"axisLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#FFFFFF\"}}},\"series\":[{\"type\":\"line\",\"showSymbol\":false,\"smooth\":true},{\"type\":\"line\",\"showSymbol\":false,\"lineStyle\":{\"type\":\"dashed\"},\"smooth\":true}],\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '775',
+    '45',
+    '405',
+    @version
+);
+-- ----------------------------
+-- 任务情况
+-- ----------------------------
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select name,value from template_1_jt_pie\",\"name\":\"name\",\"value\":\"value\",\"chartType\":\"pieRing\"}',
+    'pieRing',
+    'false',
+    '[]',
+    '250',
+    'chart32',
+    '8000',
+    '{\"lunbo\":\"0\",\"title\":{\"text\":\"任务类型分布\",\"left\":\"center\",\"top\":\"bottom\",\"textStyle\":{\"color\":\"#fff\"},\"show\":true},\"tooltip\":{\"trigger\":\"item\",\"formatter\":\"\"},\"color\":[\"#5098c7\",\"#f79665\",\"#83c094\",\"#fdd869\"],\"legend\":{\"show\":false,\"orient\":\"vertical\",\"top\":0,\"left\":0,\"data\":[\"TYPE_1\",\"TYPE_2\",\"TYPE_3\",\"TYPE_4\",\"TYPE_5\"],\"textStyle\":{\"color\":\"#fff\"}},\"series\":[{\"name\":\"\",\"type\":\"pie\",\"radius\":[\"50%\",\"70%\"],\"center\":[\"50%\",\"40%\"],\"avoidLabelOverlap\":false,\"label\":{\"normal\":{\"show\":false,\"position\":\"center\"},\"emphasis\":{\"show\":true,\"textStyle\":{\"fontSize\":\"15\",\"fontWeight\":\"bold\"},\"formatter\":\"\"}},\"labelLine\":{\"normal\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"},\"smooth\":0.2,\"length\":10,\"length2\":20}},\"data\":[{\"name\":\"TYPE_1\",\"value\":\"32\"},{\"name\":\"TYPE_2\",\"value\":\"54\"},{\"name\":\"TYPE_3\",\"value\":\"45\"},{\"name\":\"TYPE_4\",\"value\":\"12\"},{\"name\":\"TYPE_5\",\"value\":\"40\"}]}],\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '250',
+    '900',
+    '380',
+    @version
+);
+
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select name,value from template_1_js_pie\",\"name\":\"name\",\"value\":\"value\",\"chartType\":\"pieRing\"}',
+    'pieRing',
+    'false',
+    '[]',
+    '250',
+    'chart33',
+    '8000',
+    '{\"lunbo\":\"0\",\"title\":{\"text\":\"成功任务比例\",\"left\":\"center\",\"top\":\"bottom\",\"textStyle\":{\"color\":\"#fff\"},\"show\":true},\"tooltip\":{\"trigger\":\"item\",\"formatter\":\"\"},\"color\":[\"#5098c7\",\"#f79665\",\"#83c094\",\"#fdd869\"],\"legend\":{\"show\":false,\"orient\":\"vertical\",\"top\":0,\"left\":0,\"data\":[\"TYPE_1\",\"TYPE_2\"],\"textStyle\":{\"color\":\"#fff\"}},\"series\":[{\"name\":\"\",\"type\":\"pie\",\"radius\":[\"50%\",\"70%\"],\"center\":[\"50%\",\"40%\"],\"avoidLabelOverlap\":false,\"label\":{\"normal\":{\"show\":false,\"position\":\"center\"},\"emphasis\":{\"show\":true,\"textStyle\":{\"fontSize\":\"15\",\"fontWeight\":\"bold\"},\"formatter\":\"\"}},\"labelLine\":{\"normal\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"},\"smooth\":0.2,\"length\":10,\"length2\":20}},\"data\":[{\"name\":\"TYPE_1\",\"value\":\"82\"},{\"name\":\"TYPE_2\",\"value\":\"18\"}]}],\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '250',
+    '1210',
+    '380',
+    @version
+);
+-- ----------------------------
+-- 表平均容量
+-- ----------------------------
 
 
 
