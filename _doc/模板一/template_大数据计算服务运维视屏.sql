@@ -1239,6 +1239,144 @@ VALUES
 -- ----------------------------
 -- 表平均容量
 -- ----------------------------
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"SELECT * FROM template_1_tac_sum WHERE type = \'sum1\'\",\"data\":\"data\",\"chartType\":\"counter\"}',
+    'counter',
+    'false',
+    '[]',
+    '55',
+    'chart34',
+    '8000',
+    '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":40,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"GB\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
+    'false',
+    '160',
+    '1550',
+    '360',
+    @version
+);
+
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"SELECT * FROM template_1_tac_sum WHERE type = \'sum2\'\",\"data\":\"data\",\"chartType\":\"counter\"}',
+    'counter',
+    'false',
+    '[]',
+    '55',
+    'chart35',
+    '8000',
+    '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":40,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"GB\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
+    'false',
+    '120',
+    '1750',
+    '360',
+    @version
+);
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select * from template_1_tac_histogram\",\"value\":\"y\",\"name\":\"x\",\"chartType\":\"histogramGradient\"}',
+    'histogramGradient',
+    'false',
+    '{\"x\":[],\"value\":[]}',
+    '250',
+    'chart36',
+    '8000',
+    '{\"title\":{\"text\":\"渐变柱状图\",\"left\":\"center\",\"textStyle\":{\"color\":\"#fff\"},\"show\":false},\"legend\":{\"show\":false},\"backgroundColor\":\"\",\"grid\":{\"left\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"containLabel\":true,\"top\":\"0\"},\"xAxis\":{\"data\":[\"2月\",\"3月\",\"4月\",\"5月\",\"6月\",\"7月\",\"8月\",\"9月\",\"10月\",\"11月\",\"12月\"],\"name\":\"\",\"axisTick\":{\"show\":false},\"axisLine\":{\"show\":true,\"lineStyle\":{\"color\":\"#ffffff\"}},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"axisLabel\":{\"show\":true,\"inside\":false,\"textStyle\":{\"color\":\"#fff\"},\"rotate\":0,\"interval\":0},\"z\":10},\"yAxis\":{\"name\":\"\",\"axisTick\":{\"show\":false},\"axisLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"axisLabel\":{\"show\":false,\"textStyle\":{\"color\":\"#fff\"}}},\"dataZoom\":[{\"type\":\"inside\"}],\"series\":[{\"type\":\"bar\",\"itemStyle\":{\"normal\":{\"color\":\"rgba(255,255,255,0)\"}},\"barWidth\":\"30%\",\"barGap\":\"-100%\",\"barCategoryGap\":\"0\",\"data\":[[456],[456],[456],[456],[456],[456],[456],[456],[456],[456],[456]],\"animation\":false},{\"type\":\"bar\",\"itemStyle\":{\"normal\":{\"color\":{\"x\":0,\"y\":0,\"x2\":0,\"y2\":1,\"type\":\"linear\",\"global\":false,\"colorStops\":[{\"offset\":0,\"color\":\"#83bff6\"},{\"offset\":0.5,\"color\":\"#188df0\"},{\"offset\":1,\"color\":\"#188df0\"}]}},\"emphasis\":{\"color\":{\"x\":0,\"y\":0,\"x2\":0,\"y2\":1,\"type\":\"linear\",\"global\":false,\"colorStops\":[{\"offset\":0,\"color\":\"#2378f7\"},{\"offset\":0.7,\"color\":\"#2378f7\"},{\"offset\":1,\"color\":\"#83bff6\"}]}}},\"data\":[235,156,123,423,456,356,456,853,456,456,456]}]}',
+    'false',
+    '350',
+    '1530',
+    '425',
+    @version
+);
+-- ----------------------------
+-- 表存储容量
+-- ----------------------------
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select * from template_1_tsc_histogram\",\"value\":\"y\",\"name\":\"x\",\"chartType\":\"histogramGradientHorizontal\"}',
+    'histogramGradientHorizontal',
+    'false',
+    '{}',
+    '280',
+    'chart37',
+    '8000',
+    '{\"title\":{\"text\":\"水平柱状图\",\"left\":\"center\",\"textStyle\":{\"color\":\"#fff\"},\"show\":false},\"tooltip\":{\"trigger\":\"axis\",\"axisPointer\":{\"type\":\"shadow\"}},\"grid\":{\"left\":\"0\",\"right\":\"0\",\"bottom\":\"0\",\"containLabel\":true,\"top\":\"0\"},\"legend\":{\"show\":true,\"orient\":\"vertical\",\"data\":[],\"top\":\"0\",\"left\":\"0\",\"textStyle\":{\"color\":\"#ffffff\"}},\"xAxis\":{\"data\":[],\"name\":\"\",\"type\":\"value\",\"axisLabel\":{\"show\":false,\"textStyle\":{\"color\":\"#fff\"}},\"axisTick\":{\"show\":false},\"axisLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}}},\"yAxis\":{\"name\":\"\",\"type\":\"category\",\"axisTick\":{\"show\":false},\"axisLabel\":{\"show\":true,\"textStyle\":{\"color\":\"#fff\"}},\"axisLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"splitLine\":{\"show\":false,\"lineStyle\":{\"color\":\"#ffffff\"}},\"data\":[\"上海\",\"深证\",\"合肥\",\"成都\",\"安徽\",\"北京\",\"杭州\",\"长沙\"]},\"toolbox\":{\"feature\":{\"saveAsImage\":{}}},\"series\":{\"name\":\"\",\"type\":\"bar\",\"data\":[23,13,2,9,5,10,14,24]},\"backgroundColor\":\"rgba(255,255,255,0)\"}',
+    'false',
+    '385',
+    '40',
+    '775',
+    @version
+);
+
+
 
 
 

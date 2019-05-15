@@ -23,7 +23,7 @@ CREATE TABLE `chart_item` (
   `item_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `instance_id` bigint(20) DEFAULT NULL,
   `item_chart_data` text,
-  `item_chart_type` varchar(20) DEFAULT NULL,
+  `item_chart_type` varchar(50) DEFAULT NULL,
   `item_choose` varchar(10) DEFAULT NULL,
   `item_data` text,
   `item_height` bigint(20) DEFAULT NULL,
