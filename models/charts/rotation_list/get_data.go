@@ -5,7 +5,6 @@ import (
 	"data_view/utils"
 	"database/sql"
 	"encoding/json"
-	"strings"
 )
 
 type RotationListGetData struct {
@@ -66,18 +65,7 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 			} else {
 				value = string(col)
 			}
-			if strings.EqualFold(columns[i], "id") {
-				tempResultMap["id"] = value
-			}
-			if strings.EqualFold(columns[i], "key") {
-				tempResultMap["key"] = value
-			}
-			if strings.EqualFold(columns[i], "value") {
-				tempResultMap["value"] = value
-			}
-			if strings.EqualFold(columns[i], "type") {
-				tempResultMap["type"] = value
-			}
+			tempResultMap[columns[i]] = value
 		}
 		tempResults = append(tempResults, tempResultMap)
 	}
@@ -86,12 +74,13 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	dataList := make([]interface{}, 0)
 	for _, tempResult := range tempResults {
 		valueList := make([]string, 0)
-		valueList = append(valueList, tempResult["id"], tempResult["key"], tempResult["value"], tempResult["type"])
+		for _, value := range tempResult {
+			valueList = append(valueList, value)
+		}
 		dataList = append(dataList, valueList)
 	}
 	//拼接最后结果
 	resultMap["column"] = columns
-	resultMap["columnWidth"] = [4]string{"50px", "50px", "200px", "50px"}
 	resultMap["value"] = dataList
 	return &resultMap, nil
 }
