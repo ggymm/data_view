@@ -86,10 +86,14 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 
 	resultMap["dataAxis"] = utils.Duplicate(dataAxisList)
 	resultMap["data"] = dataList
-	sortList := make([]int, len(dataList))
-	copy(sortList, dataList)
-	sort.Ints(sortList)
-	yMax := sortList[len(sortList)-2 : len(sortList)-1]
-	resultMap["yMax"] = yMax
+	if len(dataList) != 0 {
+		sortList := make([]int, len(dataList))
+		copy(sortList, dataList)
+		sort.Ints(sortList)
+		yMax := sortList[len(sortList)-2 : len(sortList)-1]
+		resultMap["yMax"] = yMax
+	} else {
+		resultMap["yMax"] = nil
+	}
 	return &resultMap, nil
 }
