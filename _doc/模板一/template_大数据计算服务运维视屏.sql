@@ -1378,9 +1378,72 @@ VALUES
 -- ----------------------------
 -- 运行耗时最长任务
 -- ----------------------------
-
-
-
-
-
-
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select area,pv,series1,attribute from template_1_rlt_list\",\"chartType\":\"rotationList\"}',
+    'rotationList',
+    'false',
+    '[]',
+    '290',
+    'chart38',
+    '8000',
+    '{\"column\":{\"height\":35,\"fontColor\":\"#ffffff\",\"fontSize\":13,\"show\":false},\"columnList\":[\"area\",\"pv\",\"series1\",\"attribute\"],\"columnWidthList\":[\"100px\",\"100px\",\"100px\",\"80px\"],\"data\":{\"height\":35,\"fontColor\":\"#e2e2e2\",\"fontSize\":14},\"speed\":3,\"rowNum\":8}',
+    'false',
+    '390',
+    '455',
+    '775',
+    @version
+);
+-- ----------------------------
+-- 资源耗时最长任务
+-- ----------------------------
+INSERT INTO `chart_item` (
+    `instance_id`,
+    `item_chart_data`,
+    `item_chart_type`,
+    `item_choose`,
+    `item_data`,
+    `item_height`,
+    `item_i`,
+    `item_interval`,
+    `item_option`,
+    `item_refresh`,
+    `item_width`,
+    `item_x`,
+    `item_y`,
+    `item_version`
+)
+VALUES
+(
+    @instance_id,
+    '{\"dataSourceType\":\"DataBase\",\"database\":9,\"sql\":\"select area,pv,series1,attribute from template_1_rlt_list\",\"chartType\":\"rotationList\"}',
+    'rotationList',
+    'false',
+    '[]',
+    '300',
+    'chart39',
+    '8000',
+    '{\"column\":{\"show\":false,\"height\":35,\"fontColor\":\"#ffffff\",\"fontSize\":13},\"columnList\":[\"area\",\"pv\",\"series1\",\"attribute\"],\"columnWidthList\":[\"250px\",\"250px\",\"250px\",\"200px\"],\"data\":{\"height\":30,\"fontColor\":\"#e2e2e2\",\"fontSize\":12},\"speed\":3,\"rowNum\":10}',
+    'false',
+    '980',
+    '880',
+    '760',
+    @version
+);
