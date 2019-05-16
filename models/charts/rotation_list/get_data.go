@@ -72,15 +72,19 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	//规范数据
 	//去重后的结果
 	dataList := make([]interface{}, 0)
+	columnsList := make([]string, 0)
 	for _, tempResult := range tempResults {
 		valueList := make([]string, 0)
-		for _, value := range tempResult {
+		for key, value := range tempResult {
+			if len(columnsList) != len(tempResult) {
+				columnsList = append(columnsList, key)
+			}
 			valueList = append(valueList, value)
 		}
 		dataList = append(dataList, valueList)
 	}
 	//拼接最后结果
-	resultMap["column"] = columns
+	resultMap["column"] = columnsList
 	resultMap["value"] = dataList
 	return &resultMap, nil
 }
