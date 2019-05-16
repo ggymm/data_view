@@ -40,7 +40,6 @@ func (rotationListGetData *RotationListGetData) GetDataFromCsv(chartDataParams *
 func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[string]interface{}, error) {
 	// 返回值列表
 	resultMap := make(map[string]interface{})
-	tempResults := make([]map[string]string, 0)
 	//列名
 	columns, err := rows.Columns()
 	if err != nil {
@@ -52,39 +51,26 @@ func FormatRows(rows *sql.Rows, chartDataParams *utils.ChartDataParams) (*map[st
 	for i := range values {
 		scanArgs[i] = &values[i]
 	}
+	dataList := make([]interface{}, 0)
 	for rows.Next() {
 		if err := rows.Scan(scanArgs...); err != nil {
 			return &resultMap, err
 		}
 		var value string
 		//获取数据初步规范
-		tempResultMap := make(map[string]string)
-		for i, col := range values {
+		valueList := make([]string, 0)
+		for _, col := range values {
 			if col == nil {
 				value = "NULL"
 			} else {
 				value = string(col)
-			}
-			tempResultMap[columns[i]] = value
-		}
-		tempResults = append(tempResults, tempResultMap)
-	}
-	//规范数据
-	//去重后的结果
-	dataList := make([]interface{}, 0)
-	columnsList := make([]string, 0)
-	for _, tempResult := range tempResults {
-		valueList := make([]string, 0)
-		for key, value := range tempResult {
-			if len(columnsList) != len(tempResult) {
-				columnsList = append(columnsList, key)
 			}
 			valueList = append(valueList, value)
 		}
 		dataList = append(dataList, valueList)
 	}
 	//拼接最后结果
-	resultMap["column"] = columnsList
+	resultMap["column"] = columns
 	resultMap["value"] = dataList
 	return &resultMap, nil
 }
