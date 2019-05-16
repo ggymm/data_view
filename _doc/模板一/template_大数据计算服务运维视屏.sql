@@ -711,12 +711,12 @@ VALUES
     'counter',
     'false',
     '[]',
-    '50',
+    '40',
     'chart18',
     '8000',
     '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":40,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":false,\"unit\":{\"title\":\"TB\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
     'false',
-    '100',
+    '90',
     '985',
     '205',
     @version
@@ -750,7 +750,7 @@ VALUES
     '8000',
     '{\"title\":\"/\",\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":22,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
     'false',
-    '30',
+    '40',
     '1075',
     '222',
     @version
@@ -779,12 +779,12 @@ VALUES
     'counter',
     'false',
     '[]',
-    '50',
+    '35',
     'chart20',
     '8000',
     '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":32,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"%\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
     'false',
-    '85',
+    '80',
     '1095',
     '213',
     @version
@@ -849,12 +849,12 @@ VALUES
     'counter',
     'false',
     '[]',
-    '50',
+    '40',
     'chart22',
     '8000',
     '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":40,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":false,\"unit\":{\"title\":\"个\",\"fontColor\":\"rgba(255, 255, 255, 0.71)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
     'false',
-    '100',
+    '95',
     '1440',
     '205',
     @version
@@ -888,7 +888,7 @@ VALUES
     '8000',
     '{\"title\":\"/\",\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":22,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\"}',
     'false',
-    '35',
+    '40',
     '1550',
     '222',
     @version
@@ -917,12 +917,12 @@ VALUES
     'counter',
     'false',
     '[]',
-    '40',
+    '35',
     'chart24',
     '8000',
     '{\"fontColor\":\"rgba(255,255,255,1)\",\"fontSize\":32,\"fontWeight\":\"normal\",\"textAlign\":\"left\",\"backgroundColor\":\"rgba(255,255,255,0)\",\"thousandth\":true,\"unit\":{\"title\":\"%\",\"fontColor\":\"rgba(255, 255, 255, 0.7)\",\"fontSize\":16,\"fontWeight\":\"normal\"}}',
     'false',
-    '75',
+    '80',
     '1570',
     '213',
     @version
@@ -1375,7 +1375,9 @@ VALUES
     '775',
     @version
 );
-
+-- ----------------------------
+-- 运行耗时最长任务
+-- ----------------------------
 
 
 
